@@ -14,6 +14,7 @@ import React from 'react';
 import TitleAndMetaTags from 'components/TitleAndMetaTags';
 // $FlowFixMe This is a valid path
 import languages from '../../content/languages.yml';
+import {urlRoot} from 'site-constants';
 
 // Status enums indicate what percentage of "core" content has been translated:
 // 0: Incomplete (0–49%)
@@ -47,7 +48,10 @@ const Languages = ({location}: Props) => (
       <div css={sharedStyles.articleLayout.container}>
         <div css={sharedStyles.articleLayout.content}>
           <Header>Langues</Header>
-          <TitleAndMetaTags title="React - Langues" />
+          <TitleAndMetaTags
+            canonicalUrl={`${urlRoot}/languages/`}
+            title="React - Langues"
+          />
 
           <div css={sharedStyles.markdown}>
             <p>
@@ -136,7 +140,11 @@ const Language = ({code, name, status, translatedName}) => {
         }}>
         {status === 0 && translatedName}
         {status > 0 && (
-          <a href={`https://${prefix}reactjs.org/`} rel="nofollow">
+          <a
+            href={`https://${prefix}reactjs.org/`}
+            rel="nofollow"
+            lang={code}
+            hrefLang={code}>
             {translatedName}
           </a>
         )}

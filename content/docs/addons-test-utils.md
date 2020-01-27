@@ -17,9 +17,9 @@ var ReactTestUtils = require('react-dom/test-utils'); // ES5 avec npm
 
 `ReactTestUtils` facilite le test de composants React quel que soit votre framework de test. Chez Facebook, nous utilisons [Jest](https://facebook.github.io/jest/) pour réaliser facilement nos tests JavaScript. Pour bien démarrer avec Jest, vous pouvez lire le [Tutoriel React](http://facebook.github.io/jest/docs/en/tutorial-react.html#content) du site web de Jest.
 
-> Remarque :
+>Remarque
 >
-> Nous vous conseillons d’utiliser [`react-testing-library`](https://git.io/react-testing-library). Cette bibliothèque est conçue pour encourager l'écriture de tests utilisant vos composants de façon similaire aux utilisateurs finaux.
+> Nous vous conseillons d’utiliser [React Testing Library](https://testing-library.com/react). Cette bibliothèque est conçue pour encourager l'écriture de tests utilisant vos composants de façon similaire aux utilisateurs finaux.
 >
 > Par ailleurs, Airbnb propose un utilitaire de test appelé [Enzyme](http://airbnb.io/enzyme/), qui permet de facilement exprimer des assertions, manipuler vos composants React et en explorer le résultat.
 
@@ -46,7 +46,7 @@ var ReactTestUtils = require('react-dom/test-utils'); // ES5 avec npm
 
 Afin de préparer un composant aux assertions, il suffit d’enrober le code qui se charge de son rendu et de ses mises à jour au sein d'une fonction de rappel qui sera passée à `act()`. De cette manière, votre test s’exécutera dans un environnement proche de celui de React dans le navigateur.
 
-> Remarque :
+>Remarque
 >
 > Si vous utilisez `react-test-renderer`, ce dernier propose un export de `act` qui se comporte de la même façon.
 
@@ -122,7 +122,9 @@ it('peut afficher et mettre à jour un compteur', () => {
 });
 ```
 
-N'oubliez pas que l'émission d'événements DOM ne fonctionne que lorsque le conteneur DOM a été ajouté au `document`. Vous pouvez utiliser un utilitaire comme [`react-testing-library`](https://github.com/kentcdodds/react-testing-library) afin de réduire le volume de code générique.
+N'oubliez pas que l'émission d'événements DOM ne fonctionne que lorsque le conteneur DOM a été ajouté au `document`. Vous pouvez utiliser un utilitaire comme [`React Testing Library`](https://testing-library.com/react) afin de réduire le volume de code générique.
+
+La page des [`recettes`](/docs/testing-recipes.html) contient de plus amples détails sur le fonctionnement de `act()`, avec des exemples d’utilisation.
 
 * * *
 
@@ -137,9 +139,9 @@ mockComponent(
 
 Cette méthode prend un module de composant simulé et lui ajoute des méthodes utiles pour lui permettre d'être utilisé comme un composant React factice. Plutôt que de réaliser un rendu classique, le composant va simplement devenir une balise `<div>` (ou toute autre balise si `mockTagName` est renseigné) contenant les enfants qui lui sont fournis.
 
-> Remarque :
+>Remarque
 >
-> `mockComponent()` est une API obsolète. Nous recommandons plutôt l'usage du [rendu superficiel](/docs/shallow-renderer.html) ou de [`jest.mock()`](https://facebook.github.io/jest/docs/en/tutorial-react-native.html#mock-native-modules-using-jestmock).
+> `mockComponent()` est une API obsolète. Nous recommandons plutôt de recourir à [`jest.mock()`](https://facebook.github.io/jest/docs/en/tutorial-react-native.html#mock-native-modules-using-jestmock).
 
 * * *
 
@@ -303,7 +305,7 @@ const domContainer = document.createElement('div');
 ReactDOM.render(element, domContainer);
 ```
 
-> Remarque :
+>Remarque
 >
 > Vous aurez besoin d'avoir `window`, `window.document` et `window.document.createElement` disponibles globalement **avant** votre import de `React`. Dans le cas contraire, React pensera qu'il ne peut accéder au DOM, et des méthodes telles que `setState` ne fonctionneront pas.
 
@@ -342,7 +344,7 @@ ReactTestUtils.Simulate.change(node);
 ReactTestUtils.Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});
 ```
 
-> Remarque :
+>Remarque
 >
 > Vous devrez fournir toute les propriétés dédiées aux événements que vous utilisez dans votre composant (par exemple keyCode, which, etc.) car React ne les créera pas pour vous.
 

@@ -51,7 +51,7 @@ Si vous avez besoin de réviser votre JavaScript, nous vous conseillons la lectu
 
 Il y a deux façons de suivre ce tutoriel : vous pouvez soit écrire le code dans votre navigateur, soit configurer un environnement de développement local sur votre ordinateur.
 
-### Option 1 : Écrire le code dans le navigateur {#setup-option-1-write-code-in-the-browser}
+### Option 1 : écrire le code dans le navigateur {#setup-option-1-write-code-in-the-browser}
 
 C’est la façon la plus rapide de démarrer !
 
@@ -118,7 +118,7 @@ Nous vous conseillons de suivre [ces instructions](https://babeljs.io/docs/edito
 
 ### À l’aide, je suis bloqué·e ! {#help-im-stuck}
 
-Si vous vous retrouvez bloqué·e, jetez un coup d'œil aux [ressources communautaires de support](/community/support.html). [Le chat Reactiflux](https://discord.gg/0ZcbPKXt5bZjGY5n), notamment, est super utile pour obtenir de l’aide rapidement. Si vous ne recevez pas de réponse, ou si elle ne vous débloque pas, merci de nous le signaler par une *issue* dans GitHub, et nous ferons de notre mieux pour vous aider.
+Si vous vous retrouvez bloqué·e, jetez un coup d'œil aux [ressources communautaires de support](/community/support.html). [Le chat Reactiflux](https://discord.gg/reactiflux), notamment, est super utile pour obtenir de l’aide rapidement. Si vous ne recevez pas de réponse, ou si elle ne vous débloque pas, merci de nous le signaler par une *issue* dans GitHub, et nous ferons de notre mieux pour vous aider.
 
 ## Aperçu {#overview}
 
@@ -197,6 +197,7 @@ class Board extends React.Component {
   renderSquare(i) {
     return <Square value={i} />;
   }
+}
 ```
 
 Modifiez ensuite la méthode `render` de `Square` pour qu’elle affiche cette valeur en remplaçant `{/* TODO */}` par `{this.props.value}` :
@@ -335,7 +336,7 @@ L’extension React Devtools pour [Chrome](https://chrome.google.com/webstore/de
 
 Avec les React DevTools, vous pouvez examiner les props et l’état local de vos composants React.
 
-Après avoir installé React DevTools, vous pouvez faire un clic droit sur n’importe quel élément de la page, cliquer sur « Inspecter » (ou « Examiner l’élément ») pour ouvrir les outils de développement, et l’onglet React devrait alors être le dernier onglet sur la droite.
+Après avoir installé React DevTools, vous pouvez faire un clic droit sur n’importe quel élément de la page, cliquer sur « Inspecter » (ou « Examiner l’élément ») pour ouvrir les outils de développement, et les onglets React ("⚛️ Components" et "⚛️ Profiler") devraient être les derniers onglets sur la droite. Utilisez "⚛️ Components" pour inspecter l'arbre de composants.
 
 **Ceci dit, vous aurez quelques manipulations en plus à faire si vous utilisez CodePen :**
 

@@ -38,7 +38,7 @@ React a été conçu dès le départ pour une adoption progressive, et **vous po
 
 Si vous souhaitez tester React, vous pouvez utiliser un terrain de jeu en ligne. Essayez un modèle _Hello World_ sur [CodePen](codepen://hello-world), [CodeSandbox](https://codesandbox.io/s/new) ou [Glitch](https://glitch.com/edit/#!/remix/starter-react-template).
 
-Si vous préférez utiliser votre propre éditeur de texte, vous pouvez aussi [télécharger ce ficher HTML](https://raw.githubusercontent.com/reactjs/reactjs.org/master/static/html/single-file-example.html), l'éditer et l'ouvrir à partir du système de fichiers local dans votre navigateur. Il transforme le code à la volée lors de l’exécution, ce qui est particulièrement lent. Pour cette raison, nous vous recommandons de ne l'utiliser que pour des démos simples.
+Si vous préférez utiliser votre propre éditeur de texte, vous pouvez aussi [télécharger ce fichier HTML](https://raw.githubusercontent.com/reactjs/reactjs.org/master/static/html/single-file-example.html), l'éditer et l'ouvrir à partir du système de fichiers local dans votre navigateur. Il transforme le code à la volée lors de l’exécution, ce qui est particulièrement lent. Pour cette raison, nous vous recommandons de ne l'utiliser que pour des démos simples.
 
 ### Ajouter React à un site Web {#add-react-to-a-website}
 
@@ -46,9 +46,9 @@ Vous pouvez [ajouter React à une page HTML en une minute](/docs/add-react-to-a-
 
 ### Créer une nouvelle application React {#create-a-new-react-app}
 
-Lorsque vous démarrez un projet React, [une simple page HTML avec des balises de script](/docs/add-react-to-a-website.html) reste peut-être la meilleure option. Ça ne prend qu'une minute à mettre en place !
+Lorsque vous démarrez un projet React, une [simple page HTML avec des balises de script](/docs/add-react-to-a-website.html) reste peut-être la meilleure option. Ça ne prend qu'une minute à mettre en place !
 
-Au fur et à mesure que votre application grandit, vous voudrez peut-être envisager une configuration plus intégrée. Il y a [plusieurs boîtes à outils JavaScript](/docs/create-a-new-react-app.html) que nous conseillons pour des applications plus importantes. Chacune d'entre elles peut fonctionner avec peu ou pas de configuration et vous permet de tirer pleinement parti du riche écosystème de React.
+Au fur et à mesure que votre application grandit, vous voudrez peut-être envisager une configuration plus intégrée. Il y a plusieurs boîtes à outils JavaScript que nous conseillons pour des applications plus importantes. Chacune d'entre elles peut fonctionner avec peu ou pas de configuration et vous permet de tirer pleinement parti du riche écosystème de React.  [Découvrez comment faire](/docs/create-a-new-react-app.html).
 
 ## Apprendre React {#learn-react}
 
@@ -99,7 +99,7 @@ Parfois les gens préféreront des livres et cours vidéo créés par des tiers 
 
 ### Guides avancés {#advanced-concepts}
 
-Une fois que vous serez à l'aise avec les [fondamentaux](#main-concepts) et que vous aurez joué un peu avec React, vous pourriez être intéressé·e par des sujets plus avancés. Cette section présente les fonctionnalités puissantes, mais moins utilisées, de React, telles que le [contexte](/docs/context.html) et les [refs](/docs/refs-and-the-dom.html).
+Une fois que vous serez à l'aise avec les [fondamentaux](/docs/hello-world.html) et que vous aurez joué un peu avec React, vous pourriez être intéressé·e par des sujets plus avancés. Cette section présente les fonctionnalités puissantes, mais moins utilisées, de React, telles que le [contexte](/docs/context.html) et les [refs](/docs/refs-and-the-dom.html).
 
 ### Référence de l’API {#api-reference}
 
@@ -115,11 +115,11 @@ Le [blog React](/blog/) est la source officielle des mises à jour, par l'équip
 
 Vous pouvez également suivre le [compte @reactjs](https://twitter.com/reactjs) sur Twitter, mais rien d’essentiel ne vous échappera si vous ne lisez que le blog.
 
-Toutes les versions de React ne méritent pas leur propre article de blog, mais vous pouvez trouver un _changelog_ détaillé pour chaque version [dans le fichier `CHANGELOG.md` du dépôt React](https://github.com/facebook/react/blob/master/CHANGELOG.md), ainsi que sur la page des [_Releases_](https://github.com/facebook/react).
+Toutes les versions de React ne méritent pas leur propre article de blog, mais vous pouvez trouver un _changelog_ détaillé pour chaque version dans le [fichier `CHANGELOG.md` du dépôt React](https://github.com/facebook/react/blob/master/CHANGELOG.md), ainsi que sur la page des [_Releases_](https://github.com/facebook/react/releases).
 
 ## Documentation versionnée {#versioned-documentation}
 
-Cette documentation reflète toujours la dernière version stable de React. Depuis React 16, vous pouvez trouver les anciennes versions de la documentation [sur une page séparée](/versions). Notez que la documentation des versions antérieures est figée au moment de la publication et n'est plus mise à jour par la suite.
+Cette documentation reflète toujours la dernière version stable de React. Depuis React 16, vous pouvez trouver les anciennes versions de la documentation sur une [page séparée](/versions). Notez que la documentation des versions antérieures est figée au moment de la publication et n'est plus mise à jour par la suite.
 
 ## Quelque chose vous manque ? {#something-missing}
 

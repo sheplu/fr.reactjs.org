@@ -55,14 +55,14 @@ Rappelez-vous que seuls les fichiers React finissant par `.production.min.js` so
 
 ### Brunch {#brunch}
 
-Pour obtenir la version de production la plus efficace avec Brunch, installez l'extension [`uglify-js-brunch`](https://github.com/brunch/uglify-js-brunch) :
+Pour obtenir la version de production la plus efficace avec Brunch, installez l'extension [`terser-brunch`](https://github.com/brunch/terser-brunch) :
 
 ```
 # Si vous utilisez npm :
-npm install --save-dev uglify-js-brunch
+npm install --save-dev terser-brunch
 
 # Si vous utilisez Yarn :
-yarn add --dev uglify-js-brunch
+yarn add --dev terser-brunch
 ```
 
 Ensuite, pour créer la version de production, ajoutez l'option `-p` à la commande `build` :
@@ -79,17 +79,17 @@ Pour obtenir la version de production la plus efficace avec Browserify, installe
 
 ```
 # Si vous utilisez npm :
-npm install --save-dev envify uglify-js uglifyify
+npm install --save-dev envify terser uglifyify
 
 # Si vous utilisez Yarn :
-yarn add --dev envify uglify-js uglifyify
+yarn add --dev envify terser uglifyify
 ```
 
 Pour créer la version de production, assurez-vous d'ajouter ces transformations **(l'ordre a son importance)** :
 
 * La transformation [`envify`](https://github.com/hughsk/envify) s'assure que l'environnement est correctement défini. Définissez-la globalement (`-g`).
 * La transformation [`uglifyify`](https://github.com/hughsk/uglifyify) supprime les imports de développement. Définissez-la également au niveau global (`-g`).
-* Enfin, le *bundle* qui en résulte est transmis à [`uglify-js`](https://github.com/mishoo/UglifyJS2) pour être obfusqué ([les raisons sont détaillées ici](https://github.com/hughsk/uglifyify#motivationusage)).
+* Enfin, le *bundle* qui en résulte est transmis à [`terser`](https://github.com/terser-js/terser) pour être obfusqué ([les raisons sont détaillées ici](https://github.com/hughsk/uglifyify#motivationusage)).
 
 Par exemple :
 
@@ -97,13 +97,8 @@ Par exemple :
 browserify ./index.js \
   -g [ envify --NODE_ENV production ] \
   -g uglifyify \
-  | uglifyjs --compress --mangle > ./bundle.js
+  | terser --compress --mangle > ./bundle.js
 ```
-
-> Remarque
->
-> Le paquet est nommé `uglify-js`, mais le binaire fourni est appelé `uglifyjs`.<br>
-> Ce n'est pas une faute de frappe.
 
 Rappelez-vous que vous n'avez à faire cela que pour la version de production. Vous ne devez pas appliquer ces extensions en développement, car cela masquerait des avertissements utiles de React et ralentirait la construction.
 
@@ -111,19 +106,19 @@ Rappelez-vous que vous n'avez à faire cela que pour la version de production. V
 
 Pour obtenir la version de production la plus efficace avec Rollup, installez quelques extensions :
 
-```
+```bash
 # Si vous utilisez npm :
-npm install --save-dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugin-uglify
+npm install --save-dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugin-terser
 
 # Si vous utilisez Yarn :
-yarn add --dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugin-uglify
+yarn add --dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugin-terser
 ```
 
 Pour créer la version de production, assurez-vous d'ajouter ces transformations **(l'ordre a son importance)** :
 
 * L'extension [`replace`](https://github.com/rollup/rollup-plugin-replace) s'assure que l'environnement est correctement configuré.
 * L'extension [`commonjs`](https://github.com/rollup/rollup-plugin-commonjs) prend en charge CommonJS au sein de Rollup.
-* L'extension [`uglify`](https://github.com/TrySound/rollup-plugin-uglify) réalise la compression et obfusque le bundle final.
+* L'extension [`terser`](https://github.com/TrySound/rollup-plugin-terser) réalise la compression et obfusque le bundle final.
 
 ```js
 plugins: [
@@ -132,14 +127,14 @@ plugins: [
     'process.env.NODE_ENV': JSON.stringify('production')
   }),
   require('rollup-plugin-commonjs')(),
-  require('rollup-plugin-uglify')(),
+  require('rollup-plugin-terser')(),
   // ...
 ]
 ```
 
 Pour une configuration complète, [vous pouvez consulter ce gist](https://gist.github.com/Rich-Harris/cb14f4bc0670c47d00d191565be36bf0).
 
-Rappelez-vous que vous n'avez à faire cela que pour la version de production. Vous ne devez pas utiliser les extensions `uglify` ou `replace` avec une valeur `'production'` en développement, car cela masquerait des avertissements utiles de React et ralentirait la construction.
+Rappelez-vous que vous n'avez à faire cela que pour la version de production. Vous ne devez pas utiliser les extensions `terser` ou `replace` avec une valeur `'production'` en développement, car cela masquerait des avertissements utiles de React et ralentirait la construction.
 
 ### webpack {#webpack}
 
@@ -148,18 +143,22 @@ Rappelez-vous que vous n'avez à faire cela que pour la version de production. V
 > Si vous utilisez Create React App, merci de suivre [les instructions ci-dessus](#create-react-app).<br>
 > Cette section n'est utile que si vous configurez webpack vous-même.
 
-Pour obtenir la version de production la plus efficace avec webpack, assurez-vous d'inclure ces extensions dans votre configuration de production :
+Webpack v4+ minifera automatiquement votre code en mode production.
 
 ```js
-new webpack.DefinePlugin({
-  'process.env.NODE_ENV': JSON.stringify('production')
-}),
-new webpack.optimize.UglifyJsPlugin()
+const TerserPlugin = require('terser-webpack-plugin');
+
+module.exports = {
+  mode: 'production',
+  optimization: {
+    minimizer: [new TerserPlugin({ /* additional options here */ })],
+  },
+};
 ```
 
-Vous pouvez en apprendre plus sur le sujet en consultant la [documentation webpack](https://webpack.js.org/guides/production-build/).
+Vous pouvez en apprendre davantage sur le sujet en consultant la [documentation webpack](https://webpack.js.org/guides/production/).
 
-Rappelez-vous que vous n'avez à faire cela que pour la version de production. Vous ne devez pas utiliser `UglifyJsPlugin` ou `DefinePlugin` avec une valeur `'production'` en développement, car cela masquerait des avertissements utiles de React et ralentirait la construction.
+Rappelez-vous que vous n'avez à faire cela que pour la version de production. Vous ne devez pas utiliser `TerserPlugin` en développement, car cela masquerait des avertissements utiles de React et ralentirait la construction.
 
 ## Profilage des composants avec l'onglet Performance de Chrome {#profiling-components-with-the-chrome-performance-tab}
 
@@ -181,7 +180,7 @@ Pour faire ça avec Chrome :
 
 6. Les événements React seront regroupés sous l'étiquette ***User Timing***.
 
-Pour une présentation plus détaillée, consultez [cet article de Ben Schwarz](https://calibreapp.com/blog/2017-11-28-debugging-react/).
+Pour une présentation plus détaillée, consultez [cet article de Ben Schwarz](https://calibreapp.com/blog/react-performance-profiling-optimization).
 
 Veuillez noter que **ces résultats sont relatifs et que les composants seront rendus plus rapidement en production**. Néanmoins, ça devrait vous aider à comprendre quand des éléments d'interface sont mis à jour par erreur, ainsi que la profondeur et la fréquence des mises à jour de l'UI.
 
@@ -215,24 +214,6 @@ Si votre application génère d'importantes listes de données (des centaines ou
 React construit et maintient une représentation interne de l’UI produite, représentation qui inclut les éléments React renvoyés par vos composants. Elle permet à React d'éviter la création de nœuds DOM superflus et l'accès excessif aux nœuds existants, dans la mesure où ces opérations sont plus lentes que sur des objets JavaScript. On y fait parfois référence en parlant de « DOM virtuel », mais ça fonctionne de la même façon avec React Native.
 
 Quand les props ou l'état local d'un composant changent, React décide si une mise à jour du DOM est nécessaire en comparant l'élément renvoyé avec l'élément du rendu précédent. Quand ils ne sont pas égaux, React met à jour le DOM.
-
-Vous pouvez visualiser ces rendus de mise à jour du DOM virtuel avec React DevTools :
-
-- [L'extension pour le navigateur Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=fr).
-- [L'extension pour le navigateur Firefox](https://addons.mozilla.org/en-GB/firefox/addon/react-devtools/).
-- [Le module pour Node.js](https://www.npmjs.com/package/react-devtools).
-
-Dans la console de développement, choisissez l'option ***Highlight Updates*** dans l'onglet **React** :
-
-<p><center><img src="../images/blog/devtools-highlight-updates.png" style="max-width:100%; margin-top:10px;" alt="Comment activer l'option" /></center></p>
-
-Interagissez avec votre page, et vous devriez voir des bordures colorées apparaître momentanément autour des composants dont le rendu est mis à jour. Ça vous permet de détecter les mises à jour inutiles. Vous pouvez en apprendre davantage sur cette fonctionnalité des React DevTools en lisant [ce billet du blog](https://blog.logrocket.com/make-react-fast-again-part-3-highlighting-component-updates-6119e45e6833) de [Ben Edelstein](https://blog.logrocket.com/@edelstein).
-
-Prenons cet exemple :
-
-<center><img src="../images/blog/highlight-updates-example.gif" style="max-width:100%; margin-top:20px;" alt="Exemple de la fonctionnalité de mise en évidence des mises à jour avec React DevTools" /></center>
-
-Remarquez que lorsque l'on saisit une seconde tâche, la première clignote également à l'écran à chaque frappe. Ça signifie qu'elle est également rafraîchie par React avec son champ de saisie. On parle parfois de rendu « gâché ». Nous savons que c’est inutile car le contenu de la première tâche est inchangé, mais React l'ignore.
 
 Même si React ne met à jour que les nœuds DOM modifiés, refaire un rendu prend un certain temps. Dans la plupart des cas ce n'est pas un problème, mais si le ralentissement est perceptible, vous pouvez accélérer le processus en surchargeant la méthode `shouldComponentUpdate` du cycle de vie, qui est déclenchée avant le démarrage du processus de rafraîchissement. L'implémentation par défaut de cette méthode renvoie `true`, laissant ainsi React faire la mise à jour :
 
@@ -405,36 +386,4 @@ function updateColorMap(colormap) {
 
 Si vous utilisez Create React App, la méthode `Object.assign` et la syntaxe de décomposition d'objets sont toutes deux disponibles par défaut.
 
-## Utiliser des structures de données immuables {#using-immutable-data-structures}
-
-L'utilisation d'[Immutable.js](https://github.com/facebook/immutable-js) est une autre façon de résoudre ce problème. Elle fournit des collections immuables et persistantes qui fonctionnent avec du partage structurel :
-
-* *Immuables* : une fois créée, une collection ne peut plus être modifiée ultérieurement.
-* *Persistantes* : de nouvelles collections peuvent être créées à partir d'une ancienne collection et d'une mutation telle que `set`. La collection d'origine reste valide une fois la nouvelle collection créée.
-* *Partage structurel* : les nouvelles collections sont créées en utilisant au maximum la structure de la collection d'origine, réduisant la copie au minimum pour améliorer les performances.
-
-L'immutabilité rend le suivi des modifications peu coûteux. Un changement résultera toujours en un nouvel objet, nous n'avons alors qu'à vérifier si la référence de l'objet a changé. Par exemple, prenons ce code JavaScript classique :
-
-```javascript
-const x = { foo: 'bar' };
-const y = x;
-y.foo = 'baz';
-x === y; // true
-```
-
-Bien que `y` ait été modifié, vu qu'il s'agit toujours d'une référence au même objet `x`, cette comparaison renverra `true`. Vous pouvez écrire un code similaire avec immutable.js :
-
-```javascript
-const SomeRecord = Immutable.Record({ foo: null });
-const x = new SomeRecord({ foo: 'bar' });
-const y = x.set('foo', 'baz');
-const z = x.set('foo', 'bar');
-x === y; // false
-x === z; // true
-```
-
-Dans ce cas, puisqu'une nouvelle référence est renvoyée quand on modifie `x`, nous pouvons utiliser la vérification d'égalité référentielle `(x === y)` pour vérifier que la nouvelle valeur stockée dans `y` est différente de celle d'origine stockée dans `x`.
-
-Les deux autres bibliothèques qui facilitent l'utilisation des données immuables sont [seamless-immutable](https://github.com/rtfeldman/seamless-immutable) et [immutability-helper](https://github.com/kolodny/immutability-helper).
-
-Les structures de données immuables vous offrent un moyen peu coûteux de suivre les modifications apportées aux objets. C'est tout ce dont nous avons besoin pour implémenter la méthode `shouldComponentUpdate`. Ça peut souvent contribuer à améliorer significativement les performances.
+Lorsque vous faites face à des objets profondément imbriqués, les mettre à jour de manière immuable peut se révéler compliqué. Si vous faites face à ce problème, tournez-vous vers [Immer](https://github.com/mweststrate/immer) ou [immutability-helper](http://github.com/kolodny/immutability-helper). Ces librairies vous permettent d'écrire du code très lisible sans perdre les bénéfices de l'immuabilité.

@@ -8,6 +8,8 @@
       title: Créer une nouvelle appli React
     - id: cdn-links
       title: Liens CDN
+    - id: release-channels
+      title: Canaux de sortie
 - title: Fondamentaux
   isOrdered: true
   items:
@@ -59,6 +61,8 @@
       title: Optimiser les performances
     - id: portals
       title: Portails
+    - id: profiler
+      title: Profileur
     - id: react-without-es6
       title: React sans ES6
     - id: react-without-jsx
@@ -70,7 +74,7 @@
     - id: render-props
       title: Props de rendu
     - id: static-type-checking
-      title: Validation statique de types
+      title: Validation de types statique
     - id: strict-mode
       title: Mode strict
     - id: typechecking-with-proptypes
@@ -104,7 +108,7 @@
       title: Pré-requis pour l'environnement JS
     - id: glossary
       title: Glossaire
-- title: Hooks (Nouveau)
+- title: Hooks
   isOrdered: true
   items:
       - id: hooks-intro
@@ -123,12 +127,33 @@
         title: Référence de l'API des Hooks
       - id: hooks-faq
         title: FAQ des Hooks
+- title: Tests
+  items:
+    - id: testing
+      title: Aperçu des tests
+    - id: testing-recipes
+      title: Recettes de test
+    - id: testing-environments
+      title: Environnements de test
+- title: Mode concurrent (expérimental)
+  isOrdered: true
+  items:
+    - id: concurrent-mode-intro
+      title: Introduction au mode concurrent
+    - id: concurrent-mode-suspense
+      title: Suspense pour le chargement de données
+    - id: concurrent-mode-patterns
+      title: Approches pour une UI concurrente
+    - id: concurrent-mode-adoption
+      title: Adopter le mode concurrent
+    - id: concurrent-mode-reference
+      title: Référence de l’API du mode concurrent
 - title: Contribuer
   items:
   - id: how-to-contribute
     title: Comment contribuer
   - id: codebase-overview
-    title: Aperçu de la base de code
+    title: Aperçu du code source
   - id: implementation-notes
     title: Notes d’implémentation
   - id: design-principles
@@ -140,7 +165,7 @@
     - id: faq-build
       title: Babel, JSX, et étapes de construction
     - id: faq-functions
-      title: Passer des fonctions à des composants
+      title: Passer des fonctions aux composants
     - id: faq-state
       title: État local de composant
     - id: faq-styling

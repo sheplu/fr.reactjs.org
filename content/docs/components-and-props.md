@@ -1,6 +1,6 @@
 ---
 id: components-and-props
-title: Composants et Props
+title: Composants et props
 permalink: docs/components-and-props.html
 redirect_from:
   - "docs/reusable-components.html"
@@ -85,11 +85,11 @@ Récapitulons ce qui se passe dans cet exemple :
 3. Notre composant `Welcome` retourne un élément `<h1>Bonjour, Sara</h1>` pour résultat.
 4. React DOM met à jour efficacement le DOM pour correspondre à `<h1>Bonjour, Sara</h1>`.
 
->**Remarque :** commencez toujours vos noms de composants par une majuscule.
+>Remarque
 >
 >React considère les composants commençant par des lettres minuscules comme des balises DOM. Par exemple, `<div />` représente une balise HTML div, mais `<Welcome />` représente un composant, et exige que l’identifiant `Welcome` existe dans la portée courante.
 >
->Pour en en apprendre davantage sur le raisonnement qui sous-tend cette convention, lisez donc [JSX en profondeur](/docs/jsx-in-depth.html#user-defined-components-must-be-capitalized).
+>Pour en apprendre davantage sur le raisonnement qui sous-tend cette convention, lisez donc [JSX en profondeur](/docs/jsx-in-depth.html#user-defined-components-must-be-capitalized).
 
 ## Composition de composants {#composing-components}
 

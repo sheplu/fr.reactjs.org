@@ -1,7 +1,9 @@
-- title: Ressources communautaires
+- title: Ressources
   items:
     - id: support
       title: Support
+    - id: team
+      title: Équipe
     - id: courses
       title: Cours
     - id: examples
@@ -18,25 +20,3 @@
       title: Vidéos
     - id: external-resources
       title: Ressources externes
-- title: Outils
-  items:
-    - id: debugging-tools
-      title: Débogage
-    - id: component-workbenches
-      title: Outils de mise au point
-    - id: jsx-integrations
-      title: Intégrations JSX
-    - id: starter-kits
-      title: Kits de démarrage
-    - id: routing
-      title: Routage
-    - id: model-management
-      title: Gestion de modèles
-    - id: data-fetching
-      title: Chargement de données
-    - id: testing
-      title: Tests
-    - id: ui-components
-      title: Composants UI
-    - id: misc
-      title: Divers

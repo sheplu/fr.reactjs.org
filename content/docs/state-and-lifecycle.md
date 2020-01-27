@@ -1,6 +1,6 @@
 ---
 id: state-and-lifecycle
-title: État et Cycle de vie
+title: État et cycle de vie
 permalink: docs/state-and-lifecycle.html
 redirect_from:
   - "docs/interactivity-and-dynamic-uis.html"
@@ -71,8 +71,6 @@ ReactDOM.render(
 Pour implémenter ça, on a besoin d'ajouter un « état local » au composant `Horloge`.
 
 L'état local est similaire aux props, mais il est privé et complètement contrôlé par le composant.
-
-Nous avons [mentionné auparavant](/docs/components-and-props.html#functional-and-class-components) qu'un composant défini avec une classe a des fonctionnalités supplémentaires. L'état local, c’est exactement ça : une fonctionnalité uniquement disponible dans les classes.
 
 ## Convertir une fonction en classe {#converting-a-function-to-a-class}
 
@@ -246,7 +244,7 @@ La méthode `componentDidMount()` est exécutée après que la sortie du composa
   }
 ```
 
-Notez que l'on a enregistré l'ID du minuteur directement sur `this`.
+Notez qu’on a enregistré l'ID du minuteur directement sur `this` (`this.timerID`).
 
 Alors que `this.props` est mis en place par React lui-même et que `this.state` a un sens bien spécial, vous pouvez très bien ajouter manuellement d'autres champs sur la classe si vous avez besoin de stocker quelque chose qui ne participe pas au flux de données (comme un ID de minuteur).
 

@@ -38,7 +38,7 @@ console.log(testRenderer.toJSON());
 //   children: [ 'Facebook' ] }
 ```
 
-Vous pouvez utiliser la fonctionnalité de test par instantanés *(snapshot testing, NdT)* de Jest pour sauvegarder automatiquement une copie de l'arbre JSON obtenu dans un fichier, puis vérifier dans vos tests qu'il n'a pas changé : [vous trouverez plus de détails ici](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html).
+Vous pouvez utiliser la fonctionnalité de test par instantanés *(snapshot testing, NdT)* de Jest pour sauvegarder automatiquement une copie de l'arbre JSON obtenu dans un fichier, puis vérifier dans vos tests qu'il n'a pas changé : [vous trouverez plus de détails ici](https://jestjs.io/docs/en/snapshot-testing).
 
 Vous pouvez également explorer le résultat pour trouver des nœuds spécifiques et vérifier vos attentes les concernant.
 
@@ -70,6 +70,7 @@ expect(testInstance.findByProps({className: "sub"}).children).toEqual(['Sous-Com
 ### TestRenderer {#testrenderer}
 
 * [`TestRenderer.create()`](#testrenderercreate)
+* [`TestRenderer.act()`](#testrendereract)
 
 ### Instance de `TestRenderer` {#testrenderer-instance}
 
@@ -102,7 +103,37 @@ expect(testInstance.findByProps({className: "sub"}).children).toEqual(['Sous-Com
 TestRenderer.create(element, options);
 ```
 
-Crée une instance de `TestRenderer` avec l'élément React passé en argument. Ça n’utilise pas un véritable DOM, mais ça ne l’empêche pas de produire l'arbre intégral des composants en mémoire pour pouvoir vérifier vos attentes dessus. L'instance renvoyée possède les méthodes et propriétés suivantes.
+Crée une instance de `TestRenderer` avec l'élément React passé en argument. Ça n’utilise pas un véritable DOM, mais ça ne l’empêche pas de produire l'arbre intégral des composants en mémoire pour pouvoir vérifier vos attentes dessus. Renvoie une [instance de TestRenderer](#testrenderer-instance).
+
+### `TestRenderer.act()` {#testrendereract}
+
+```javascript
+TestRenderer.act(callback);
+```
+
+De la même manière que l'[utilitaire `act()` de `react-dom/test-utils`](/docs/test-utils.html#act), `TestRenderer.act` prépare un composant permettant la vérification d'attentes. Utilisez cette version de `act()` pour englober les appels à `TestRenderer.create` et `testRenderer.update`.
+
+```javascript
+import {create, act} from 'react-test-renderer';
+import App from './app.js'; // Le composant testé
+
+// Fait le rendu du component
+let root; 
+act(() => {
+  root = create(<App value={1}/>)
+});
+
+// Exprime des attentes sur la racine
+expect(root.toJSON()).toMatchSnapshot();
+
+// Met à jour avec des props différentes
+act(() => {
+  root = root.update(<App value={2}/>);
+})
+
+// Exprime des attentes sur la racine
+expect(root.toJSON()).toMatchSnapshot();
+```
 
 ### `testRenderer.toJSON()` {#testrenderertojson}
 
@@ -118,7 +149,7 @@ Renvoie un objet représentant l'arbre obtenu. Cet arbre contient uniquement les
 testRenderer.toTree()
 ```
 
-Renvoie un objet représentant l'arbre obtenu. Contrairement à `toJSON()` la représentation y est plus détaillée et contient les composants écrits par l'utilisateur. Vous n'aurez probablement pas besoin de cette méthode à moins que vous n’écriviez votre propre bibliothèque de vérification d'attentes construite au-dessus du renderer de test.
+Renvoie un objet représentant l'arbre obtenu. Contrairement à `toJSON()`, la représentation y est plus détaillée et contient les composants écrits par l'utilisateur. Vous n'aurez probablement pas besoin de cette méthode à moins que vous n’écriviez votre propre bibliothèque de vérification d'attentes construite au-dessus du renderer de test.
 
 ### `testRenderer.update()` {#testrendererupdate}
 

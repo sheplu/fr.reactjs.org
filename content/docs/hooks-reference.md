@@ -60,14 +60,16 @@ function Counter({initialCount}) {
     <>
       Total : {count}
       <button onClick={() => setCount(initialCount)}>Réinitialiser</button>
-      <button onClick={() => setCount(prevCount => prevCount + 1)}>+</button>
       <button onClick={() => setCount(prevCount => prevCount - 1)}>-</button>
+      <button onClick={() => setCount(prevCount => prevCount + 1)}>+</button>
     </>
   );
 }
 ```
 
-Les boutons « + » et « - » utilisent la forme fonctionnelle, puisque la nouvelle valeur est calculée à partir de la valeur précédente. Le bouton « Réinitialiser » utilise quant à lui la forme normale puisqu'il remet toujours le total à une valeur fixe.
+Les boutons « + » et « - » utilisent la forme fonctionnelle, puisque la nouvelle valeur est calculée à partir de la valeur précédente. Le bouton « Réinitialiser » utilise quant à lui la forme normale puisqu'il remet toujours le total à sa valeur initiale.
+
+Si votre fonction de mise à jour renvoie exactement la même valeur, le rendu ultérieur sera carrément sauté.
 
 > Remarque
 >
@@ -80,7 +82,7 @@ Les boutons « + » et « - » utilisent la forme fonctionnelle, puisque la 
 > });
 > ```
 >
-> Il est aussi possible d'utiliser `userReducer`, qui est plus adapté pour gérer les objets d'état local qui contiennent plusieurs sous-valeurs.
+> Il est aussi possible d'utiliser `useReducer`, qui est plus adapté pour gérer les objets d'état local qui contiennent plusieurs sous-valeurs.
 
 #### État local initial paresseux {#lazy-initial-state}
 
@@ -97,6 +99,8 @@ const [state, setState] = useState(() => {
 
 Si vous mettez à jour un Hook d'état avec la même valeur que son état actuel, React abandonnera cette mise à jour, ce qui signifie qu'aucun nouveau rendu des enfants ne sera effectué et qu'aucun effet ne sera déclenché. (React utilise [l'algorithme de comparaison `Object.is`](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/is).)
 
+Remarquez que React peut quand même avoir besoin d’afficher ce composant à nouveau avant d'abandonner. Ça ne devrait pas pose problème car React n'ira pas « plus profondément » dans l'arbre. Si vous effectuez des calculs coûteux lors du rendu, vous pouvez les optimiser avec `useMemo`.
+
 ### `useEffect` {#useeffect}
 
 ```js
@@ -109,7 +113,7 @@ L'utilisation de mutations, abonnements, horloges, messages de journalisation, e
 
  Pour ce faire, utilisez plutôt `useEffect`. La fonction fournie à `useEffect` sera exécutée après que le rendu est apparu sur l'écran. Vous pouvez considérer les effets comme des échappatoires pour passer du monde purement fonctionnel de React au monde impératif.
 
-Par défaut, les effets de bord s'exécutent après chaque rendu, mais vous pouvez choisir d'en exécuter certains [uniquement quand certaines valeurs ont changé](#conditionally-firing-an-effect).
+Par défaut, les effets de bord s'exécutent après chaque rendu, mais vous pouvez choisir d’en exécuter certains [uniquement quand certaines valeurs ont changé](#conditionally-firing-an-effect).
 
 #### Nettoyage d'un effet de bord {#cleaning-up-an-effect}
 
@@ -160,7 +164,7 @@ L'abonnement sera maintenant recréé uniquement quand `props.source` change.
 >
 >Si vous utilisez cette optimisation, assurez-vous que votre tableau inclut bien **toutes les valeurs dans la portée du composant (telles que les props et l'état local) qui peuvent changer avec le temps et sont utilisées par l'effet**. Sinon, votre code va référencer des valeurs obsolètes issues des rendus précédents.  Vous pouvez en apprendre davantage sur [la façon de gérer les dépendances à des fonctions](/docs/hooks-faq.html#is-it-safe-to-omit-functions-from-the-list-of-dependencies) et comment faire quand [les dépendances listées changent trop souvent](/docs/hooks-faq.html#what-can-i-do-if-my-effect-dependencies-change-too-often).
 >
->Si vous voulez exécuter un effet et le nettoyer une seule fois (au montage puis au démontage), vous pouvez passer un tableau vide (`[]`) comme deuxième argument.  Ça indique à React que votre effet ne dépend *d’aucune* valeur issue des props ou de l'état local, donc il n’a jamais besoin d’être ré-exécuté.  Il ne s'agit pas d'un cas particulier : ça découle directement de la façon dont le tableau des dépendances fonctionne.
+>Si vous voulez exécuter un effet et le nettoyer une seule fois (au montage puis au démontage), vous pouvez passer un tableau vide (`[]`) comme deuxième argument.  Ça indique à React que votre effet ne dépend *d’aucune* valeur issue des props ou de l'état local, donc il n’a jamais besoin d’être ré-exécuté.  Il ne s'agit pas d'un cas particulier : ça découle directement de la façon dont le tableau des dépendances fonctionne.
 >
 >Si vous passez un tableau vide (`[]`), les props et l'état local vus depuis l'intérieur de l'effet feront toujours référence à leurs valeurs initiales.  Même si passer `[]` comme deuxième argument vous rapproche du modèle mental habituel de `componentDidMount` et `componentWillUnmount`, il y a en général de [meilleures](/docs/hooks-faq.html#is-it-safe-to-omit-functions-from-the-list-of-dependencies) [solutions](/docs/hooks-faq.html#what-can-i-do-if-my-effect-dependencies-change-too-often) pour éviter de ré-exécuter les effets trop souvent. Par ailleurs, ne perdez pas de vue que React défère l’exécution de `useEffect` jusqu’à ce que la navigateur ait fini de rafraîchir l’affichage, du coup y faire plus de travail est moins un problème.
 >
@@ -171,12 +175,71 @@ Le tableau d'entrées n'est pas fourni comme argument à la fonction d'effet. Co
 ### `useContext` {#usecontext}
 
 ```js
-const context = useContext(Context);
+const value = useContext(MyContext);
 ```
 
-Accepte un objet contexte (la valeur renvoyée par `React.createContext`), et renvoie la valeur actuelle du contexte telle qu'elle est donnée par le fournisseur de contexte le plus proche pour l’objet contexte utilisé.
+Accepte un objet contexte (la valeur renvoyée par `React.createContext`), et renvoie la valeur actuelle du contexte. Celle-ci est déterminée par la prop `value` du plus proche `<MyContext.Provider>` au-dessus du composant dans l'arbre.
 
-Quand le fournisseur met la valeur à jour, ce Hook va déclencher un nouveau rendu avec la valeur la plus récente du contexte.
+Quand le plus proche `<MyContext.Provider>` au-dessus du composant est mis à jour, ce Hook va déclencher un rafraîchissement avec la `value` la plus récente passée au fournisseur `MyContext`.  Même si un ancêtre utilise [`React.memo`](/docs/react-api.html#reactmemo) ou [`shouldComponentUpdate`](/docs/react-component.html#shouldcomponentupdate), le rendu aura quand même à nouveau lieu à partir du composant qui recourt à `useContext`.
+
+N’oubliez pas que l’argument de `useContext` doit être *l’objet contexte lui-même* :
+
+ * **Correct :** `useContext(MyContext)`
+ * **Erroné :** `useContext(MyContext.Consumer)`
+ * **Erroné :** `useContext(MyContext.Provider)`
+
+Un composant qui appelle `useContext` se rafraîchira toujours quand la valeur du contexte change.  Si ce rafraîchissement est coûteux, vous pouvez [l’optimiser grâce à la mémoïsation](https://github.com/facebook/react/issues/15156#issuecomment-474590693).
+
+> Astuce
+>
+> Si vous aviez l’habitude de l’API de Contexte avant les Hooks, `useContext(MyContext)` est équivalent à `static contextType = MyContext` dans une classe, ou à `<MyContext.Consumer>`.
+>
+> `useContext(MyContext)` vous permet seulement de *lire* le contexte et de vous abonner à ses modifications.  Vous aurez toujours besoin d’un `<MyContext.Provider>` plus haut dans l’arbre pour *fournir* une valeur de contexte.
+
+**Un exemple consolidé avec Context.Provider**
+
+```js{31-36}
+const themes = {
+  light: {
+    foreground: "#000000",
+    background: "#eeeeee"
+  },
+  dark: {
+    foreground: "#ffffff",
+    background: "#222222"
+  }
+};
+
+const ThemeContext = React.createContext(themes.light);
+
+function App() {
+  return (
+    <ThemeContext.Provider value={themes.dark}>
+      <Toolbar />
+    </ThemeContext.Provider>
+  );
+}
+
+function Toolbar(props) {
+  return (
+    <div>
+      <ThemedButton />
+    </div>
+  );
+}
+
+function ThemedButton() {
+  const theme = useContext(ThemeContext);
+
+  return (
+    <button style={{ background: theme.background, color: theme.foreground }}>
+      Je suis stylé par le contexte de thème !
+    </button>
+  );
+}
+```
+
+Cet exemple est une version modifiée pour utiliser les Hooks de l’exemple dans le [guide avancé des Contextes](/docs/context.html), au sein duquel vous pourrez trouver davantage d’informations sur l’utilisation appropriée de Context.
 
 ## Hooks supplémentaires {#additional-hooks}
 
@@ -208,13 +271,13 @@ function reducer(state, action) {
   }
 }
 
-function Counter({initialState}) {
+function Counter() {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <>
       Total : {state.count}
-      <button onClick={() => dispatch({type: 'increment'})}>+</button>
       <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
     </>
   );
 }
@@ -270,10 +333,10 @@ function Counter({initialCount}) {
       Total : {state.count}
       <button
         onClick={() => dispatch({type: 'reset', payload: initialCount})}>
-        Reset
+        Réinitialiser
       </button>
-      <button onClick={() => dispatch({type: 'increment'})}>+</button>
       <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
     </>
   );
 }
@@ -282,6 +345,8 @@ function Counter({initialCount}) {
 #### Abandon d'un dispatch {#bailing-out-of-a-dispatch}
 
 Si vous renvoyez la même valeur que l'état actuel dans un Hook de réduction, React abandonnera la mise à jour, ce qui signifie qu'aucun nouveau rendu des enfants ne sera effectué et qu'aucun effet ne sera déclenché. (React utilise [l'algorithme de comparaison `Object.is`](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Object/is).)
+
+Remarquez que React pourrait encore avoir besoin de mettre à jour ce composant spécifique avant de lâcher l’affaire. Ça ne devrait pas vous soucier car React n'ira pas inutilement « plus profond » dans l’arbre. Si vous effectuez des calculs coûteux lors du rendu, vous pouvez les optimiser avec `useMemo`.
 
 ### `useCallback` {#usecallback}
 
@@ -353,7 +418,15 @@ function TextInputWithFocusButton() {
 }
 ```
 
-Remarquez que `useRef()` est utile au-delà du seul attribut `ref`. C'est [pratique pour garder des valeurs modifiables sous la main](/docs/hooks-faq.html#is-there-something-like-instance-variables), comme lorsque vous utilisez des champs d’instance dans les classes.
+En gros, `useRef` est comme une « boîte » qui pourrait contenir une valeur modifiable dans sa propriété `.current`.
+
+Vous avez peut-être l'habitude d'utiliser des refs principalement pour [accéder au DOM](/docs/refs-and-the-dom.html).  Si vous passez un objet ref à React avec `<div ref={myRef} />`, React calera sa propriété `.current` sur le nœud DOM correspondant chaque fois que ce dernier change.
+
+Ceci dit, `useRef()` est utile au-delà du seul attribut `ref`. C'est [pratique pour garder des valeurs modifiables sous la main](/docs/hooks-faq.html#is-there-something-like-instance-variables), comme lorsque vous utilisez des champs d’instance dans les classes.
+
+Ça fonctionne parce que `useRef()` crée un objet JavaScript brut.  La seule différence entre `useRef()` et la création manuelle d’un objet `{current: ... }`, c'est que `useRef` vous donnera le même objet à chaque rendu.
+
+Gardez à l'esprit que `useRef` *ne vous notifie pas* quand le contenu change.  Modifier la propriété `.current` n'entraîne pas un rafraîchissement.  Si vous voulez exécuter du code quand React attache ou détache une ref sur un nœud DOM, vous voudrez sans doute utiliser plutôt une [ref à base de fonction de rappel](/docs/hooks-faq.html#how-can-i-measure-a-dom-node).
 
 ### `useImperativeHandle` {#useimperativehandle}
 
@@ -375,7 +448,8 @@ function FancyInput(props, ref) {
 }
 FancyInput = forwardRef(FancyInput);
 ```
-Dans cet exemple, un composant parent qui utiliserait `<FancyInput ref={fancyInputRef} />` pourrait appeler `fancyInputRef.current.focus()`.
+
+Dans cet exemple, un composant parent qui utiliserait `<FancyInput ref={inputRef} />` pourrait appeler `inputRef.current.focus()`.
 
 ### `useLayoutEffect` {#uselayouteffect}
 
@@ -385,7 +459,11 @@ Préférez l'utilisation du `useEffect` standard chaque fois que possible, pour 
 
 > Astuce
 >
-> Si vous migrez du code depuis un composant écrit à l'aide d'une classe, `useLayoutEffect` s'exécute dans la même phase que `componentDidMount` et `componentDidUpdate`. Si vous n'êtes donc pas sûr·e du Hook d'effet à utiliser, c'est probablement le moins risqué.
+> Si vous migrez du code depuis un composant écrit à l'aide d'une classe, sachez que `useLayoutEffect` s'exécute dans la même phase que `componentDidMount` et `componentDidUpdate`. **Nous vous conseillons de commencer avec `useEffect`**, et de ne tenter `useLayoutEffect` que si vous rencontrez des problèmes.
+>
+> Si vous faites du rendu côté serveur , n'oubliez pas que *ni* `useLayoutEffect` ni `useEffect` ne seront exécutés jusqu'à ce que votre code JS soit téléchargé et exécuté côté client. C’est pourquoi React vous averti quand un composant utilise `useLayoutEffect` dans le cadre d’un rendu côté serveur.  Pour corriger ça, vous pouvez soit déplacer la logique dans `useEffect` (si elle n'est pas nécessaire pour le premier affichage), soit reporter l'affichage du composant jusqu'à ce que l’affichage côté client soit effectué (si le HTML aurait eu l’air cassé avant exécution du `useLayoutEffect`).
+>
+> Pour exclure un composant nécessitant des effets de mise en page *(layout effects, NdT)* du HTML généré côté serveur, vous pouvez l'afficher conditionnellement avec un `showChild && <Child />`, et différer son affichage grâce à un `useEffect(() => { setShowChild(true); }, [])`.  Ainsi, l’UI ne semblera pas cassé avec son hydratation.
 
 ### `useDebugValue` {#usedebugvalue}
 

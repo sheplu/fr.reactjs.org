@@ -33,7 +33,7 @@ La seule méthode que vous *devez* définir dans une sous-classe de `React.Compo
 
 **Nous vous recommandons fortement de ne pas créer vos propres classes de base pour vos composants.**  Dans les composants React, [la réutilisation de code est obtenue principalement par composition plutôt que par héritage](/docs/composition-vs-inheritance.html).
 
-> Remarque :
+>Remarque
 >
 > React ne vous force pas à utiliser la syntaxe de classes ES6. Si vous préférez l’éviter, vous pouvez utiliser à la place le module `create-react-class` ou une autre abstraction maison du même genre. Allez faire un tour sur [React sans ES6](/docs/react-without-es6.html) pour en apprendre davantage.
 
@@ -50,7 +50,7 @@ Les méthodes suivantes sont appelées dans cet ordre lorsqu’une instance d’
 - [**`render()`**](#render)
 - [**`componentDidMount()`**](#componentdidmount)
 
-> Remarque :
+>Remarque
 >
 > Les méthodes suivantes sont considérées dépréciées et vous devriez [les éviter](/blog/2018/03/27/update-on-async-rendering.html) dans vos nouveaux codes :
 >
@@ -67,7 +67,7 @@ Une mise à jour est déclenchée par des changements dans les props ou l’éta
 - [**`componentDidUpdate()`**](#componentdidupdate)
 
 
-> Remarque :
+>Remarque
 >
 > Les méthodes suivantes sont considérées dépréciées et vous devriez [les éviter](/blog/2018/03/27/update-on-async-rendering.html) dans vos nouveaux codes :
 >
@@ -89,7 +89,7 @@ Ces méthodes sont appelées lorsqu’une erreur survient au sein de n’importe
 
 ### Autres API {#other-apis}
 
-Chaque composant fournit par ailleurs quelques APIs supplémentaires :
+Chaque composant fournit par ailleurs quelques API supplémentaires :
 
   - [`setState()`](#setstate)
   - [`forceUpdate()`](#forceupdate)
@@ -184,7 +184,7 @@ Le constructeur est le seul endroit où vous devriez affecter directement une va
 >
 > **N’utilisez cette approche que si vous avez l’intention d’ignorer les mises à jour de la prop.**  Dans un tel cas, il serait judicieux de renommer la `prop` vers quelque chose comme `initialColor` ou `defaultColor`. Vous pouvez ensuite forcer le composant à « réinitialiser » son état interne en [changeant sa `key`](/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key) lorsque c’est nécessaire.
 >
-> Pour apprendre quelle approche utiliser lorsque vous pensez qu’une partie de votre état doit dépendre des props, lisez notre [article sur l’art d’éviter un état dérivé](/blog/2018/06/07/you-probably-dont-need-derived-state.html) (en anglais).
+> Pour apprendre quelle approche utiliser lorsque vous pensez qu’une partie de votre état doit dépendre des props, lisez notre [article sur l’art d’éviter un état dérivé](/blog/2018/06/07/you-probably-dont-need-derived-state.html).
 
 
 * * *
@@ -222,7 +222,7 @@ componentDidUpdate(prevProps) {
 }
 ```
 
-Vous **avez le droit d’appeler `setState()` directement** dans `componentDidUpdate()` mais notez bien que **vous devez l’enrober dans une condition**, comme dans l’exemple ci-dessus, ou vous obtiendrez l’équivalent d’une boucle infinie. Là aussi, vous déclencherez un rendu supplémentaire qui, même s’il n’est pas perceptible par l’utilisateur, peut affecter la performance du composant. Si vous essayez de « refléter » dans l’état local une prop venant de plus haut, voyez si vous ne pouvez pas plutôt utiliser directement la prop. Vous pouvez en apprendre davantage sur [les raisons pour lesquelles copier des props dans l’état local est source de bugs](/blog/2018/06/07/you-probably-dont-need-derived-state.html) (en anglais).
+Vous **avez le droit d’appeler `setState()` directement** dans `componentDidUpdate()` mais notez bien que **vous devez l’enrober dans une condition**, comme dans l’exemple ci-dessus, ou vous obtiendrez l’équivalent d’une boucle infinie. Là aussi, vous déclencherez un rendu supplémentaire qui, même s’il n’est pas perceptible par l’utilisateur, peut affecter la performance du composant. Si vous essayez de « refléter » dans l’état local une prop venant de plus haut, voyez si vous ne pouvez pas plutôt utiliser directement la prop. Vous pouvez en apprendre davantage sur [les raisons pour lesquelles copier des props dans l’état local est source de bugs](/blog/2018/06/07/you-probably-dont-need-derived-state.html).
 
 Si votre composant implémente la méthode de cycle de vie `getSnapshotBeforeUpdate()` (ce qui est rare), la valeur retournée par celle-ci sera passée comme troisième argument `snapshot` à `componentDidUpdate()`. Dans le cas inverse, cet argument sera `undefined`.
 
@@ -281,7 +281,7 @@ Cette méthode existe pour [les rares cas](/blog/2018/06/07/you-probably-dont-ne
 
 Dériver l’état entraîne généralement des composants au code verbeux et difficile à suivre. [Assurez-vous qu’une meilleure alternative n’existe pas](/blog/2018/06/07/you-probably-dont-need-derived-state.html) :
 
-* Si vous avez besoin de **réaliser un effet de bord** (par exemple, récupérer des données ou dérouler une animation) en réponse à une modification des props, utilisez plutôt la méthode de cycle de vie [`componentDidUpdate`](#componentdidupdate).
+* Si vous avez besoin de **réaliser un effet de bord** (par exemple, charger des données ou dérouler une animation) en réponse à une modification des props, utilisez plutôt la méthode de cycle de vie [`componentDidUpdate`](#componentdidupdate).
 * Si vous voulez **recalculer des données seulement quand une prop change**, [utilisez plutôt un utilitaire de mémoïsation](/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization).
 * Si vous souhaitez **« réinitialiser » une partie de l’état local quand une prop change**, voyez s’il ne serait pas plutôt judicieux de rendre le composant [pleinement contrôlé](/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-controlled-component) ou [pleinement non-contrôlé avec une `key`](/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key).
 
@@ -321,7 +321,7 @@ Un composant basé classe devient un périmètre d’erreur s’il définit au m
 
 N’utilisez les périmètres d’erreurs que pour retomber sur vos pieds lors d’exceptions inattendues ; **ne les utilisez pas comme primitives de contrôle de flux.**
 
-Pour en apprendre davantage, lisez [*Gestion d’Erreurs dans React 16*](/blog/2017/07/26/error-handling-in-react-16.html) (en anglais).
+Pour en apprendre davantage, lisez [*Gestion d’Erreurs dans React 16*](/blog/2017/07/26/error-handling-in-react-16.html).
 
 > Remarque
 >
@@ -418,7 +418,7 @@ class ErrorBoundary extends React.Component {
 
 ### Méthodes de cycle de vie dépréciées {#legacy-lifecycle-methods}
 
-Les méthodes de cycle de vie ci-dessous sont « historiques » *(legacy, NdT)*, et à ce titre sont considérées comme dépréciées. Elles fonctionnent encore, mais nous les déconseillons dans tout nouveau code. Vous pouvez en apprendre davantage sur la bonne façon de faire migrer ces méthodes dans [cet article sur notre blog](/blog/2018/03/27/update-on-async-rendering.html) (en anglais).
+Les méthodes de cycle de vie ci-dessous sont « historiques » *(legacy, NdT)*, et à ce titre sont considérées comme dépréciées. Elles fonctionnent encore, mais nous les déconseillons dans tout nouveau code. Vous pouvez en apprendre davantage sur la bonne façon de faire migrer ces méthodes dans [cet article sur notre blog](/blog/2018/03/27/update-on-async-rendering.html).
 
 ### `UNSAFE_componentWillMount()` {#unsafe_componentwillmount}
 
@@ -452,11 +452,11 @@ UNSAFE_componentWillReceiveProps(nextProps)
 >
 > Utiliser cette méthode de cycle de vie aboutit le plus souvent à des bugs de cohérence.
 >
->* Si vous aviez besoin de **réaliser un effet de bord** (par exemple, récupérer des données ou dérouler une animation) en réponse à une modification des props, utilisez plutôt la méthode de cycle de vie [`componentDidUpdate`](#componentdidupdate).
+>* Si vous aviez besoin de **réaliser un effet de bord** (par exemple, charger des données ou dérouler une animation) en réponse à une modification des props, utilisez plutôt la méthode de cycle de vie [`componentDidUpdate`](#componentdidupdate).
 >* Si vous utilisiez `componentWillReceiveProps` pour **recalculer des données seulement quand une prop change**, [utilisez plutôt un utilitaire de mémoïsation](/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization).
 >* Si vous utilisiez `componentWillReceiveProps` pour **« réinitialiser » une partie de l’état local quand une prop change**, voyez s’il ne serait pas plutôt judicieux de rendre le composant [pleinement contrôlé](/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-controlled-component) ou [pleinement non-contrôlé avec une `key`](/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key).
 >
-> Pour les autres cas, [suivez les recommandations de notre article de blog sur la dérivation d’état](/blog/2018/06/07/you-probably-dont-need-derived-state.html) (en anglais).
+> Pour les autres cas, [suivez les recommandations de notre article de blog sur la dérivation d’état](/blog/2018/06/07/you-probably-dont-need-derived-state.html).
 
 `UNSAFE_componentWillReceiveProps()` est appelée avant que le composant déjà monté reçoive de nouvelles props. Si vous avez besoin de mettre à jour l’état en réponse à des changements de props (par exemple, pour le réinitialiser), vous pourriez comparer `this.props` et `nextProps`, et déclencher des transitions d’état local en utilisant `this.setState()` au sein de cette méthode.
 
