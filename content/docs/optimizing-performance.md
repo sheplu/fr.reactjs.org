@@ -2,6 +2,8 @@
 id: optimizing-performance
 title: Optimiser les performances
 permalink: docs/optimizing-performance.html
+prev: uncontrolled-components.html
+next: react-without-es6.html
 redirect_from:
   - "docs/advanced-performance.html"
 ---
@@ -189,8 +191,8 @@ Pour le moment, Chrome, Edge et IE sont les seuls navigateurs prenant en charge 
 ## Profilage des composants avec le DevTools Profiler {#profiling-components-with-the-devtools-profiler}
 
 `react-dom` 16.5+ et `react-native` 0.57+ offrent des capacités de profilage avancées en mode de développement avec le Profiler de l'extension React DevTools.
-Vous trouverez un aperçu du *Profiler* sur le billet de blog [*"Introducing the React Profiler"*](/blog/2018/09/10/introducing-the-react-profiler.html).
-Une présentation vidéo du *Profiler* est également [disponible sur YouTube](https://www.youtube.com/watch?v=nySib7ipZdk).
+Vous trouverez un aperçu du profileur sur le billet de blog [*« Découvrez le profileur React »*](/blog/2018/09/10/introducing-the-react-profiler.html).
+Une présentation vidéo du profileur est également [disponible sur YouTube](https://www.youtube.com/watch?v=nySib7ipZdk).
 
 Si vous n'avez pas encore installé l'extension React DevTools, vous pourrez la trouver ici :
 
@@ -376,13 +378,15 @@ function updateColorMap(colormap) {
 
 `updateColorMap` renvoie désormais un nouvel objet, plutôt que de modifier l'ancien. `Object.assign` fait partie d'ES6 et nécessite un polyfill.
 
-Il existe une proposition JavaScript pour ajouter [la décomposition des propriétés d'objet](https://github.com/sebmarkbage/ecmascript-rest-spread) *(object spread properties, NdT)* afin de simplifier la mise à jour des objets sans pour autant les modifier :
+[La syntaxe de décomposition des objets](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Syntaxe_d%C3%A9composition) facilite la mise à jour d’objets sans pour autant les modifier :
 
 ```js
 function updateColorMap(colormap) {
   return {...colormap, right: 'blue'};
 }
 ```
+
+Cette fonctionnalité est apparue dans JavaScript avec ES2018.
 
 Si vous utilisez Create React App, la méthode `Object.assign` et la syntaxe de décomposition d'objets sont toutes deux disponibles par défaut.
 

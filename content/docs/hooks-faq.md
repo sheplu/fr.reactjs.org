@@ -70,7 +70,7 @@ Depuis la version 16.8.0, React embarque une implémentation stable de React Hoo
 
 Remarquez que **pour activer les Hooks, tous les paquets React doivent être en version 16.8.0 ou supérieure**. Les Hooks ne fonctionneront pas si vous oubliez de mettre à jour React DOM, par exemple.
 
-[React Native 0.59](https://facebook.github.io/react-native/blog/2019/03/12/releasing-react-native-059) et ultérieurs prennent en charge les Hooks.
+[React Native 0.59](https://reactnative.dev/blog/2019/03/12/releasing-react-native-059) et ultérieurs prennent en charge les Hooks.
 
 ### Dois-je réécrire tous mes composants à base de classe ? {#do-i-need-to-rewrite-all-my-class-components}
 
@@ -94,7 +94,7 @@ Vous ne pouvez pas utiliser les Hooks *à l'intérieur* d'un composant à base d
 
 ### Est-ce que les Hooks couvrent tous les cas d'utilisation des classes ? {#do-hooks-cover-all-use-cases-for-classes}
 
-Notre but est que les Hooks couvrent tous les cas d'utilisation des classes dès que possible. Il n’existe pas pour l'instant d'équivalent en Hook pour les méthodes de cycle de vie moins courantes que sont `getSnapshotBeforeUpdate` et `componentDidCatch`, mais nous prévoyons de les ajouter rapidement.
+Notre but est que les Hooks couvrent tous les cas d'utilisation des classes dès que possible. Il n’existe pas pour l'instant d'équivalent en Hook pour les méthodes de cycle de vie moins courantes que sont `getSnapshotBeforeUpdate`, `getDerivedStateFromError` et `componentDidCatch`, mais nous prévoyons de les ajouter rapidement.
 
 Les Hooks en sont encore à leur débuts, et quelques bibliothèques tierces peuvent ne pas être compatibles avec les Hooks à l'heure actuelle.
 
@@ -212,7 +212,7 @@ Il existe quelques autres heuristiques, et elles changeront peut-être avec le t
 * `shouldComponentUpdate` : voyez `React.memo` [ci-dessous](#how-do-i-implement-shouldcomponentupdate).
 * `render` : c'est le corps-même de la fonction composant.
 * `componentDidMount`, `componentDidUpdate`, `componentWillUnmount` : le [Hook `useEffect`](/docs/hooks-reference.html#useeffect) peut exprimer toutes les combinaisons de celles-ci (y compris des cas [moins](#can-i-skip-an-effect-on-updates) [fréquents](#can-i-run-an-effect-only-on-updates)).
-* `componentDidCatch` et `getDerivedStateFromError` : il n'existe pas encore de Hook équivalent pour ces méthodes, mais ils seront ajoutés prochainement.
+* `getSnapshotBeforeUpdate`, `componentDidCatch` et `getDerivedStateFromError` : il n'existe pas encore de Hook équivalent pour ces méthodes, mais ils seront ajoutés prochainement.
 
 ### Comment charger des données distantes avec les Hooks ? {#how-can-i-do-data-fetching-with-hooks}
 
@@ -572,7 +572,7 @@ Selon votre cas, vous trouverez quelques options supplémentaires plus bas dans 
 
 Voyons en quoi c’est important.
 
-Si vous précisez une [liste de dépendances](/docs/hooks-reference.html#conditionally-firing-an-effect) comme dernier argument de `useEffect`, `useMemo`, `useCallback`, ou `useImperativeHandle`, cette liste doit inclure toutes les valeurs utilisées dans la fonction passée qui participent au flux de données de React.  Ça inclut les props, l'état local, et toute valeur qui en découle.
+Si vous précisez une [liste de dépendances](/docs/hooks-reference.html#conditionally-firing-an-effect) comme dernier argument de `useEffect`, `useLayoutEffet`, `useMemo`, `useCallback`, ou `useImperativeHandle`, cette liste doit inclure toutes les valeurs utilisées dans la fonction passée qui participent au flux de données de React.  Ça inclut les props, l'état local, et toute valeur qui en découle.
 
 Le **seul cas** pour lequel vous pouvez sereinement omettre une fonction de la liste des dépendances, c'est lorsque rien à l'intérieur (y compris dans les autres fonctions qu'elle appelle) ne référence les props, l'état local ou des valeurs qui en découlent.  L'exemple suivant a ce problème :
 
@@ -581,7 +581,7 @@ function ProductPage({ productId }) {
   const [product, setProduct] = useState(null);
 
   async function fetchProduct() {
-    const response = await fetch('http://myapi/product' + productId); // Utilise la prop productId
+    const response = await fetch('http://myapi/product/' + productId); // Utilise la prop productId
     const json = await response.json();
     setProduct(json);
   }
@@ -602,7 +602,7 @@ function ProductPage({ productId }) {
   useEffect(() => {
     // En déplaçant cette fonction dans l'effet, on voit clairement quelles valeurs il utilise.
     async function fetchProduct() {
-      const response = await fetch('http://myapi/product' + productId);
+      const response = await fetch('http://myapi/product/' + productId);
       const json = await response.json();
       setProduct(json);
     }

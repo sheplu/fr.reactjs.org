@@ -23,7 +23,7 @@ Tout travail sur React se passe directement sur [GitHub](https://github.com/face
 
 ### Gestion sémantique des versions {#semantic-versioning}
 
-React utilise une [gestion sémantique de version](https://semver.org/). Nous publions des versions de correctifs pour les corrections de bugs critiques, des versions mineures pour les nouvelles fonctionnalités et les modifications non-essentielles, et des versions majeures s'il y a rupture de la compatibilité ascendante. Quand nous introduisons de telles ruptures, nous ajoutons aussi des avertissements de dépréciation dans une version mineure afin que nos utilisateur·rice·s puissent se familiariser avec les changements à venir et migrer leur code en amont.  Vous pouvez en apprendre davantage sur notre engagement en termes de stabilité et de migration incrémentielle dans notre [politique de gestion des versions](https://reactjs.org/docs/faq-versioning.html).
+React utilise une [gestion sémantique de version](https://semver.org/). Nous publions des versions de correctifs pour les corrections de bugs critiques, des versions mineures pour les nouvelles fonctionnalités et les modifications non-essentielles, et des versions majeures s'il y a rupture de la compatibilité ascendante. Quand nous introduisons de telles ruptures, nous ajoutons aussi des avertissements de dépréciation dans une version mineure afin que nos utilisateur·rice·s puissent se familiariser avec les changements à venir et migrer leur code en amont.  Vous pouvez en apprendre davantage sur notre engagement en termes de stabilité et de migration incrémentielle dans notre [politique de gestion des versions](/docs/faq-versioning.html).
 
 Toute modification substancielle est documentée dans le [journal des modifications](https://github.com/facebook/react/blob/master/CHANGELOG.md).
 
@@ -107,6 +107,7 @@ Afin que nous puissions accepter votre _pull request_, nous avons besoin que vou
 ### Pré-requis pour contribuer {#contribution-prerequisites}
 
 * Vous avez [Node](https://nodejs.org) installé en v8.0.0+ et [Yarn](https://yarnpkg.com/en/) en v1.2.0+.
+* Vous avez le [JDK](https://www.oracle.com/technetwork/java/javase/downloads/index.html) installé.
 * Vous avez `gcc` installé ou êtes à l'aise avec le fait d'installer un compilateur si besoin. Certaines de nos dépendances peuvent nécessiter une étape de compilation. Sur OS X, les outils de ligne de commande XCode s'en occupent. Sur Ubuntu, `apt-get install build-essential` installera les paquets nécessaires. Des commandes similaires devraient fonctionner pour d'autres distributions Linux. Windows nécessite quelques étapes supplémentaires, consultez les [instructions d'installation de `node-gyp`](https://github.com/nodejs/node-gyp#installation) pour plus de détails.
 * Vous êtes à l’aise avec Git
 
@@ -132,18 +133,26 @@ Tout d’abord, lancez `yarn build`. Ça produira des _bundles_ pré-compilés d
 
 La manière la plus simple d'essayer vos modifications consiste à lancer `yarn build react/index,react-dom/index --type=UMD` et ensuite ouvrir `fixtures/packaging/babel-standalone/dev.html`. Ce fichier utilise déjà `react.development.js` depuis le dossier `build`, donc il utilisera vos évolutions.
 
-Si vous voulez essayer vos évolutions dans votre projet React existant, vous pouvez copier `build/dist/react.development.js`, `build/dist/react-dom.development.js`, ou tout autre produit de la compilation dans votre appli et les utiliser au lieu de la version stable. Si votre projet utilise React via npm, vous pouvez supprimer `react` et `react-dom` dans ses dépendances et utiliser `yarn link` pour les faire pointer vers votre dossier local `build` :
+Si vous voulez essayer vos évolutions dans votre projet React existant, vous pouvez copier `build/dist/react.development.js`, `build/dist/react-dom.development.js`, ou tout autre produit de la compilation dans votre appli et les utiliser au lieu de la version stable.
+
+Si votre projet utilise React via npm, vous pouvez supprimer `react` et `react-dom` dans ses dépendances et utiliser `yarn link` pour les faire pointer vers votre dossier local `build`. Remarquez qu’**au lieu de `--type=UMD` vous voudrez plutôt passer `--type=NODE` à la construction**. Vous aurez aussi besoin du module `scheduler` :
 
 ```sh
-cd ~/chemin_vers_votre_clone_de_react/build/node_modules/react
+cd ~/chemin_vers_votre_clone_de_react/
+yarn build react/index,react-dom/index,scheduler --type=NODE
+
+cd build/node_modules/react
 yarn link
-cd ~/chemin_vers_votre_clone_de_react/build/node_modules/react-dom
+cd build/node_modules/react-dom
 yarn link
-cd /chemin/vers/votre/projet
+
+cd ~/chemin/vers/votre/projet
 yarn link react react-dom
 ```
 
 Chaque fois que vous lancez `yarn build` dans le dossier de React, les versions mises à jour apparaîtront dans le dossier `node_modules` de votre projet. Vous pouvez alors recompiler votre projet pour essayer vos modifications.
+
+Si un module reste manquant (par ex. peut-être utilisez-vous `react-dom/server` dans votre projet), vous pouvez toujours faire une construction intégrale avec `yarn build`.  Gardez à l’esprit que l’exécution de `yarn build` sans options prend beaucoup de temps.
 
 Nous exigeons tout de même que votre _pull request_ contienne des tests unitaires pour chaque nouvelle fonctionnalité. Ainsi nous pouvons nous assurer de ne pas casser votre code par la suite.
 
@@ -156,19 +165,6 @@ Ensuite, notre *linter* repèrera la plupart des problèmes qui pourraient exist
 Vous pouvez vérifier l’état du style de votre code simplement en lançant `yarn linc`.
 
 Cependant, il y a toujours certains styles que le *linter* ne peut pas remarquer. Si vous n'êtes pas sûr·e de votre coup, laissez-vous guider par le [Guide de style de Airbnb](https://github.com/airbnb/javascript).
-
-### Vidéo de présentation {#introductory-video}
-
-Vous voudrez peut-être regarder cette [cette courte vidéo](https://www.youtube.com/watch?v=wUpPsEcGsg8) (26 minutes, en anglais) qui présente comment contribuer à React.
-
-#### Moments les plus intéressants de la vidéo : {#video-highlights}
-- [4:12](https://youtu.be/wUpPsEcGsg8?t=4m12s) - Compiler et tester React en local
-- [6:07](https://youtu.be/wUpPsEcGsg8?t=6m7s) - Créer et envoyer des _pull requests_
-- [8:25](https://youtu.be/wUpPsEcGsg8?t=8m25s) - Organiser son code
-- [14:43](https://youtu.be/wUpPsEcGsg8?t=14m43s) - npm & React
-- [19:15](https://youtu.be/wUpPsEcGsg8?t=19m15s) - Ajouter de nouvelles fonctionnalités à React
-
-Pour avoir une vue d'ensemble réaliste de l’expérience de première contribution à React, jetez un coup d’œil à [cette présentation divertissante donnée à ReactNYC](https://www.youtube.com/watch?v=GWCcZ6fnpn4) (en anglais).
 
 ### Appels à commentaires (RFC) {#request-for-comments-rfc}
 

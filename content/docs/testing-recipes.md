@@ -57,7 +57,7 @@ Vous utilisez peut-être une autre approche, mais gardez à l’esprit que vous 
 
 ### `act()` {#act}
 
-Lorsqu’on écrit des tests UI, des tâches comme le rendu lui-même, les événements utilisateurs ou encore le chargement de données peuvent être considérées comme autant « d’unités » d’interaction avec l’interface utilisateur.  React fournit une fonction utilitaire appelée `act()` qui s’assure que toutes les mises à jour relatives à ces « unités » ont bien été traitées et appliquées au DOM avant que nous ne commencions à exprimer nos assertions :
+Lorsqu’on écrit des tests UI, des tâches comme le rendu lui-même, les événements utilisateurs ou encore le chargement de données peuvent être considérées comme autant « d’unités » d’interaction avec l’interface utilisateur.  `react-dom/test-utils` fournit une fonction utilitaire appelée [`act()`](/docs/test-utils.html#act) qui s’assure que toutes les mises à jour relatives à ces « unités » ont bien été traitées et appliquées au DOM avant que nous ne commencions à exprimer nos assertions :
 
 ```js
 act(() => {
@@ -253,7 +253,7 @@ export default function Map(props) {
 import React from "react";
 import Map from "./map";
 
-function Contact(props) {
+export default function Contact(props) {
   return (
     <div>
       <address>
@@ -464,6 +464,8 @@ Nous pouvons écrire les tests de ce composant en tirant parti de la [simulation
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
+
+import Card from "./card";
 
 jest.useFakeTimers();
 

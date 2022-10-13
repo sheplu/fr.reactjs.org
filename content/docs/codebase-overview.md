@@ -15,12 +15,6 @@ Si vous souhaitez [contribuer à React](/docs/how-to-contribute.html), nous esp�
 
 Nous ne recommandons pas nécessairement ces conventions dans les applications React. Nombre d'entre elles existent pour des raisons historiques et sont susceptibles d’évoluer avec le temps.
 
-### Dépendances externes {#external-dependencies}
-
-React n'a presque pas de dépendances externes. Habituellement, un `require()` pointe vers un fichier dans le code de React lui-même. Cependant, il existe quelques exceptions relativement rares.
-
-Le [dépôt fbjs](https://github.com/facebook/fbjs) existe parce que React partage quelques petits utilitaires avec des bibliothèques telles que [Relay](https://github.com/facebook/relay) et que nous les gardons synchronisées. Nous ne dépendons pas de petits modules équivalents dans l'écosystème Node, car nous souhaitons que les ingénieurs de Facebook puissent les modifier à tout moment. Aucun des utilitaires contenus dans fbjs n'est considéré comme une API publique et ils ne doivent être utilisés que par des projets Facebook tels que React.
-
 ### Dossiers racines {#top-level-folders}
 
 Après avoir cloné le [dépôt React](https://github.com/facebook/react), vous verrez quelques dossiers racines :
@@ -41,33 +35,11 @@ Par exemple, un test pour [`setInnerHTML.js`](https://github.com/facebook/react/
 
 ### Avertissements et invariants {#warnings-and-invariants}
 
-Le code source de React utilise le module `warning` pour afficher les avertissements :
+Le code source de React utilise `console.error` pour afficher les avertissements :
 
 ```js
-var warning = require('warning');
-
-warning(
-  2 + 2 === 4,
-  'Les maths sont en vacances aujourd’hui.'
-);
-```
-
-**L'avertissement est affiché lorsque la condition de `warning` est `false`.**
-
-Pensez-y en vous disant que la condition devrait refléter la situation normale plutôt que la situation exceptionnelle.
-
-Ce serait plutôt bien d'éviter de spammer la console avec des avertissements en double :
-
-```js
-var warning = require('warning');
-
-var didWarnAboutMath = false;
-if (!didWarnAboutMath) {
-  warning(
-    2 + 2 === 4,
-    'Les maths sont en vacances aujourd’hui.'
-  );
-  didWarnAboutMath = true;
+if (__DEV__) {
+  console.error('Il y a un souci.');
 }
 ```
 
@@ -120,39 +92,6 @@ ReactRef.detachRefs = function(
 Dans la mesure du possible, le nouveau code devrait utiliser des annotations Flow.
 Vous pouvez exécuter `yarn flow` localement pour vérifier votre code avec Flow.
 
-### Injection dynamique {#dynamic-injection}
-
-React utilise l'injection dynamique dans certains modules. Bien que ce soit toujours explicite, c’est quand même dommage car ça nuit à la compréhension du code. Ces injections viennent principalement du fait que React ne visait initialement que le DOM. React Native a commencé comme un fork de React. Nous avons dû ajouter une injection dynamique pour permettre à React Native de remplacer certains comportements.
-
-Vous verrez peut-être des modules déclarer leurs dépendances dynamiques comme ceci :
-
-```js
-// Dynamically injected
-var textComponentClass = null;
-
-// Relies on dynamically injected value
-function createInstanceForText(text) {
-  return new textComponentClass(text);
-}
-
-var ReactHostComponent = {
-  createInstanceForText,
-
-  // Provides an opportunity for dynamic injection
-  injection: {
-    injectTextComponentClass: function(componentClass) {
-      textComponentClass = componentClass;
-    },
-  },
-};
-
-module.exports = ReactHostComponent;
-```
-
-Le champ `injection` n'est en aucun cas traité spécialement. Mais par convention, il signifie que ce module veut recevoir certaines dépendances (supposément spécifiques à une plate-forme) par injection au moment de l'exécution.
-
-Il y a plusieurs points d'injection dans le code source. À l’avenir, nous entendons nous débarrasser du mécanisme d’injection dynamique et raccorder toutes les pièces de manière statique pendant la construction.
-
 ### Plusieurs paquets {#multiple-packages}
 
 React est un [monorepo](https://danluu.com/monorepo/). Son dépôt contient plusieurs paquets distincts afin que leurs modifications puissent être coordonnées et que les problèmes puissent être signalés dans un seul et même endroit.
@@ -171,7 +110,7 @@ Le code pour le noyau React se trouve dans [`packages/react`](https://github.com
 
 ### Moteurs de rendu {#renderers}
 
-React a été créé à l'origine pour le DOM, mais il a ensuite été adapté pour prendre également en charge les plates-formes natives avec [React Native](https://facebook.github.io/react-native/). C’est ainsi qu’est né le concept de « moteurs de rendu » *(renderers, terme que nous utiliserons sans italiques dans la suite de ce texte, NdT)* au sein de React.
+React a été créé à l'origine pour le DOM, mais il a ensuite été adapté pour prendre également en charge les plates-formes natives avec [React Native](https://react-native.dev/). C’est ainsi qu’est né le concept de « moteurs de rendu » *(renderers, terme que nous utiliserons sans italiques dans la suite de ce texte, NdT)* au sein de React.
 
 **Les renderers gèrent la transformation d'une arborescence React en appels à la plate-forme sous-jacente.**
 
@@ -217,9 +156,7 @@ Son code source est situé dans [`packages/react-reconciler`](https://github.com
 
 ### Système d'événements {#event-system}
 
-React implémente un système d'événements synthétiques indépendant du moteur de rendu, qui fonctionne à la fois avec React DOM et React Native. Son code source se trouve dans [`packages/legacy-events`](https://github.com/facebook/react/tree/master/packages/legacy-events).
-
-Voici une [vidéo qui plonge en profondeur dans ce code](https://www.youtube.com/watch?v=dRo_egw7tBc) (66 minutes).
+React implémente une abstraction par-dessus les événements natifs afin de lisser les disparités d’un navigateur à l’autre. Son code source se trouve dans [`packages/react-dom/src/events`](https://github.com/facebook/react/tree/master/packages/react-dom/src/events).
 
 ### Et maintenant ? {#what-next}
 

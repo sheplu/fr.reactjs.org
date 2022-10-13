@@ -2,6 +2,7 @@
 id: jsx-in-depth
 title: JSX dans le détail
 permalink: docs/jsx-in-depth.html
+next: typechecking-with-proptypes.html
 redirect_from:
   - "docs/jsx-spread.html"
   - "docs/jsx-gotchas.html"
@@ -44,8 +45,7 @@ est compilé en :
 ```js
 React.createElement(
   'div',
-  {className: 'sidebar'},
-  null
+  {className: 'sidebar'}
 )
 ```
 Si vous souhaitez voir comment certains éléments JSX spécifiques sont compilés en JavaScript, vous pouvez utiliser [le compilateur Babel en ligne](babel://jsx-simple-example).
@@ -110,7 +110,7 @@ function hello(props) {
 }
 
 function HelloWorld() {
-  // Faux ! React pense que <hello /> est une balise HTML car il commence pas par une majuscule :
+  // Faux ! React pense que <hello /> est une balise HTML car il ne commence pas par une majuscule :
   return <hello toWhat="World" />;
 }
 ```
@@ -228,7 +228,7 @@ Si vous n'affectez aucune valeur à une prop, sa valeur par défaut sera `true`.
 <MyTextBox autocomplete={true} />
 ```
 
-En général, nous déconseillons cette syntaxe car ça peut être confondu avec [la notation ES6 de propriétés concises](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Opérateurs/Initialisateur_objet) `{foo}` qui est l'abréviation de `{foo: foo}` et non de `{foo: true}`. Ce comportement existe uniquement par souci de cohérence avec HTML.
+En général, nous déconseillons cette syntaxe qui *ne passe pas* de valeur à une *prop*, car ça peut être confondu avec [la notation ES6 de propriétés concises](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Opérateurs/Initialisateur_objet) `{foo}` qui est l'abréviation de `{foo: foo}` et non de `{foo: true}`. Ce comportement existe uniquement par souci de cohérence avec HTML.
 
 ### Décomposition des props {#spread-attributes}
 

@@ -38,14 +38,6 @@ Brian a fait des études d'art et programmait à côté pour les payer.  Il a fi
 
 Dan a commencé à programmer en tombant par hasard sur Visual Basic dans Microsoft PowerPoint.  Il a depuis découvert sa véritable vocation, qui est de transformer les tweets de [Sebastian](#sebastian-markbage) en interminables billets de blogs. Dan gagne parfois à Fortnite en se planquant dans un buisson jusqu’à ce que la partie se termine.
 
-### Dominic Gannaway {#dominic-gannaway}
-
-![Dominic](../images/team/trueadm.jpg)
-
-[@trueadm sur GitHub](https://github.com/trueadm) &middot; [@trueadm sur Twitter](https://twitter.com/trueadm)
-
-Dominic aime voyager, jouer de la batterie ou de la basse, la comédie *stand-up* et passer du temps en famille.  Il aime particulièrement bidouiller des idées novatrices dans le domaine des interfaces utilisateurs (UI) et de l’accessibilité, et a une passion pour le peaufinage et l’optimisation de code afin d’obtenir les meilleures performances possibles.
-
 ### Luna Ruan {#luna-ruan}
 
 ![Luna](../images/team/lunaruan.jpg)
@@ -53,14 +45,6 @@ Dominic aime voyager, jouer de la batterie ou de la basse, la comédie *stand-up
 [@lunaruan sur GitHub](https://github.com/lunaruan) &middot; [@lunaruan sur Twitter](https://twitter.com/lunaruan)
 
 Luna a appris a programmer car elle pensait que ça revenait à créer des jeux vidéos.  Au lieu de quoi, elle s’est retrouvée à travailler sur l’appli web de Pinterest, et désormais sur React-même.  Luna n’a plus envie de faire des jeux vidéos, mais elle compte se mettre à l’écriture créative si elle finit par s’ennuyer.
-
-### Nicolas Gallagher {#nicolas-gallagher}
-
-![Nicolas](../images/team/necolas.jpg)
-
-[@necolas sur GitHub](https://github.com/necolas) &middot; [@necolas sur Twitter](https://twitter.com/necolas)
-
-Nicolas a un diplôme en anthropologie.  Il a démarré le développement web en construisant un site pour un ami, et sans trop savoir comment a fini par refaire le site web de Twitter avec React.  Nicolas se décrit lui-même comme ennuyeux sur le papier, mais nettement mieux dans la vraie vie.
 
 ### Rachel Nabors {#rachel-nabors}
 
@@ -70,6 +54,14 @@ Nicolas a un diplôme en anthropologie.  Il a démarré le développement web en
 
 Rachel a écrit un [livre sur l’animation des UI](https://abookapart.com/products/animation-at-work) et a collaboré au MDN et au W3C sur l’API Web Animations.  Elle s’occupe à présent des supports éducatifs et de la gestion de la communauté pour l’équipe React.  Elle a par ailleurs une vie secrète de dessinatrice primée pour adolescentes.  Vous pourrez la trouver dans la micro-cuisine en train de préparer du thé de qualité en dépit d’une eau tiède.
 
+### Rick Hanlon {#rick-hanlon}
+
+![Ricky](../images/team/rickhanlonii.jpg)
+
+[@rickhanlonii sur GitHub](https://github.com/rickhanlonii) &middot; [@rickhanlonii sur Twitter](https://twitter.com/rickhanlonii)
+
+Ricky a fati des études principalement en mathématiques théoriques et s’est retrouvé dans l’équipe React Native quelques années avant de rejoindre l’équipe React.  Lorsqu’il n’est pas en train de programmer, on peut le voir snowboarder, faire du vélo, grimper, faire du golf ou fermer des tickets GitHub qui ne suivent pas le gabarit recommandé.
+
 ### Sebastian Markbåge {#sebastian-markbage}
 
 ![Sebastian](../images/team/sebmarkbage.jpg)
@@ -78,21 +70,13 @@ Rachel a écrit un [livre sur l’animation des UI](https://abookapart.com/produ
 
 Sebastian a un diplôme en psychologie.  Il est du genre réservé.  Même quand il dit quelque chose, le reste d’entre nous met le plus souvent quelques mois à enfin comprendre ce qu’il raconte.  La prononciation correcte de son nom de famille est « mark-boa-geh », mais il accepte « mark-beige » par pragmatisme—un peu comme avec son approche de React.
 
-### Sunil Pai {#sunil-pai}
+### Seth Webster {#seth-webster}
 
-![Sunil](../images/team/threepointone.jpg)
+![Seth](../images/team/sethwebster.jpg)
 
-[@threepointone sur GitHub](https://github.com/threepointone) &middot; [@threepointone sur Twitter](https://twitter.com/threepointone)
+[@sethwebster sur GitHub](https://github.com/sethwebster) &middot; [@sethwebster sur Twitter](https://twitter.com/sethwebster)
 
-Sunil a commencé à écrire du JavaScript pour IE6 et en porte encore les cicatrices.  Il a travaillé pour des sociétés de consulting, de design et d’édition produit avant de rejoindre l’équipe React pour aider les autres à faire de même.  Sunil joue sur une guitare Les Paul bleue, adore Londres, et apprécierait une réponse à sa dernière question, s’il vous plaît merci !
-
-### Yuzhi Zheng {#yuzhi-zheng}
-
-![Yuzhi](../images/team/yuzhi.jpg)
-
-[@yuzhi sur GitHub](https://github.com/yuzhi) &middot; [@yuzhiz sur Twitter](https://twitter.com/yuzhiz)
-
-Yuzhi a étudié l’informatique à l’école.  Elle a aimé la gratification instantanée de voir son code prendre vie sans avoir à être physiquement présente dans un laboratoire.  Elle gère à présent l’équipe React.  Avant d’être manager, elle bossait sur le framework de récupération de données Relay.  Dans son temps libre, Yuzhi aime optimiser sa vie à coup de jardinage et d’autres projets d’aménagement d’intérieur.
+Seth a commencé à programmer lorsqu’il était enfant à Tucson, Arizona. Après l’école, il est devenu mordu de musique et a tourné comme musicien pendant environ 10 ans avant de recommencer à *travailler*, tout d’abord chez Intuit.  Dans son temps libre, il adore [prendre des photos](https://www.sethwebster.com) et voler au secours d’animaux dans le quart Nord-Est des États-Unis.
 
 ## Remerciements {#acknowledgements}
 
@@ -109,6 +93,7 @@ React est originellement la création de [Jordan Walke](https://github.com/jordw
 * [Christoph Nakazawa](https://github.com/cpojer)
 * [Christopher Chedeau](https://github.com/vjeux)
 * [Clement Hoang](https://github.com/clemmy)
+* [Dominic Gannaway](https://github.com/trueadm)
 * [Flarnie Marchan](https://github.com/flarnie)
 * [Jason Quense](https://github.com/jquense)
 * [Jesse Beach](https://github.com/jessebeach)
@@ -120,14 +105,17 @@ React est originellement la création de [Jordan Walke](https://github.com/jordw
 * [Keyan Zhang](https://github.com/keyz)
 * [Nat Alison](https://github.com/tesseralis)
 * [Nathan Hunzaker](https://github.com/nhunzaker)
+* [Nicolas Gallagher](https://github.com/necolas)
 * [Paul O'Shannessy](https://github.com/zpao)
 * [Pete Hunt](https://github.com/petehunt)
 * [Philipp Spiess](https://github.com/philipp-spiess)
 * [Sander Spies](https://github.com/sanderspies)
+* [Sasha Aickin](https://github.com/aickin)
 * [Sophia Shoemaker](https://github.com/mrscobbler)
 * [Sophie Alpert](https://github.com/sophiebits)
-* [Sasha Aickin](https://github.com/aickin)
+* [Sunil Pai](https://github.com/threepointone)
 * [Tim Yung](https://github.com/yungsters)
+* [Yuzhi Zheng](https://github.com/yuzhi)
 
 Cette liste n’est pas exhaustive.
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * @emails react-core
  * @flow
@@ -7,16 +7,18 @@
 
 import Helmet from 'react-helmet';
 import React from 'react';
-import {urlRoot} from 'site-constants';
 // $FlowFixMe This is a valid path
 import languages from '../../../content/languages.yml';
+import {urlRoot} from 'site-constants';
 
-const defaultDescription = 'Une bibliothèque JavaScript pour créer des interfaces utilisateurs';
+const defaultDescription =
+  'Une bibliothèque JavaScript pour créer des interfaces utilisateurs';
 
 type Props = {
   title: string,
   ogDescription: string,
   canonicalUrl: string,
+  ogType: string,
 };
 
 // only provide alternate links to pages in languages where 95-100% of core content has been translated
@@ -45,13 +47,18 @@ const defaultPage = canonicalUrl => {
   return canonicalUrl.replace(urlRoot, 'https://reactjs.org');
 };
 
-const TitleAndMetaTags = ({title, ogDescription, canonicalUrl}: Props) => {
+const TitleAndMetaTags = ({
+  title,
+  ogDescription,
+  canonicalUrl,
+  ogType = 'website',
+}: Props) => {
   return (
     <Helmet title={title}>
       <meta property="og:title" content={title} />
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={ogType} />
       {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
-      <meta property="og:image" content="/logo-og.png" />
+      <meta property="og:image" content="https://fr.reactjs.org/logo-og.png" />
       <meta
         property="og:description"
         content={ogDescription || defaultDescription}

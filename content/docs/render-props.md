@@ -2,6 +2,8 @@
 id: render-props
 title: Props de rendu
 permalink: docs/render-props.html
+prev: higher-order-components.html
+next: integrating-with-other-libraries.html
 ---
 
 Le terme [« prop de rendu »](https://cdb.reacttraining.com/use-a-render-prop-50de598f11ce) _(render prop, NdT)_ fait référence à une technique qui consiste à partager du code entre des composants React en utilisant une prop dont la valeur est une fonction.
@@ -41,7 +43,7 @@ class MouseTracker extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '100%' }} onMouseMove={this.handleMouseMove}>
+      <div style={{ height: '100vh' }} onMouseMove={this.handleMouseMove}>
         <h1>Déplacez votre souris sur l’écran !</h1>
         <p>La position actuelle de la souris est ({this.state.x}, {this.state.y})</p>
       </div>
@@ -74,7 +76,7 @@ class Mouse extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '100%' }} onMouseMove={this.handleMouseMove}>
+      <div style={{ height: '100vh' }} onMouseMove={this.handleMouseMove}>
 
         {/* ...mais comment afficher autre chose qu'un <p> ? */}
         <p>La position actuelle de la souris est ({this.state.x}, {this.state.y})</p>
@@ -86,10 +88,10 @@ class Mouse extends React.Component {
 class MouseTracker extends React.Component {
   render() {
     return (
-      <div>
+      <>
         <h1>Déplacez votre souris sur l’écran !</h1>
         <Mouse />
-      </div>
+      </>
     );
   }
 }
@@ -127,7 +129,7 @@ class MouseWithCat extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '100%' }} onMouseMove={this.handleMouseMove}>
+      <div style={{ height: '100vh' }} onMouseMove={this.handleMouseMove}>
 
         {/*
           Nous pourrions simplement remplacer le <p> par un <Cat> ici...
@@ -183,7 +185,7 @@ class Mouse extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '100%' }} onMouseMove={this.handleMouseMove}>
+      <div style={{ height: '100vh' }} onMouseMove={this.handleMouseMove}>
 
         {/*
           Au lieu de fournir une représentation statique de ce qu’affiche <Mouse>,

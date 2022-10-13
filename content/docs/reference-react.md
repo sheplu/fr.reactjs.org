@@ -125,11 +125,11 @@ const MyComponent = React.memo(function MyComponent(props) {
 });
 ```
 
-`React.memo` est un [composant d'ordre supérieur](/docs/higher-order-components.html). Il joue le même rôle que [`React.PureComponent`](#reactpurecomponent), mais pour les composants créés à l'aide de fonctions plutôt que de classes.
+`React.memo` est un [composant d'ordre supérieur](/docs/higher-order-components.html).
 
-Si vous avez une fonction composant qui affiche toujours le même résultat pour un même jeu de propriétés, vous pouvez l'enrober avec `React.memo`, ce qui mémoïsera le résultat et devrait augmenter les performances dans certains cas. Cela signifie que React sautera le rafraîchissement du composant en réutilisant son dernier rendu en date.
+Si vous avez un composant qui affiche toujours le même résultat pour un même jeu de propriétés, vous pouvez l'enrober avec `React.memo`, ce qui mémoïsera le résultat et devrait augmenter les performances dans certains cas. Cela signifie que React sautera le rafraîchissement du composant en réutilisant son dernier rendu en date.
 
-`React.memo` n’affecte que les modifications de props. Si votre fonction composant enrobée par `React.memo` utilise un Hook [`useState`](/docs/hooks-state.html) ou [`useContext`](/docs/hooks-reference.html#usecontext) dans son implémentation, des changements d’état local ou de contexte entraîneront tout de même un nouveau rendu.
+`React.memo` ne se préoccupe que des modifications de props. Si votre fonction composant enrobée par `React.memo` utilise un Hook [`useState`](/docs/hooks-state.html) ou [`useContext`](/docs/hooks-reference.html#usecontext) dans son implémentation, des changements d’état local ou de contexte entraîneront tout de même un nouveau rendu.
 
 Par défaut, seule une comparaison de surface des props sera faite. Si vous voulez gérer cette comparaison vous-même, vous pouvez fournir une fonction de comparaison personnalisée en deuxième argument.
 

@@ -1,6 +1,8 @@
 ---
 id: refs-and-the-dom
 title: Les refs et le DOM
+prev: static-type-checking.html
+next: uncontrolled-components.html
 redirect_from:
   - "docs/working-with-the-browser.html"
   - "docs/more-about-refs.html"
@@ -161,14 +163,14 @@ class Parent extends React.Component {
 }
 ```
 
-Si vous voulez permettre à vos utilisateurs de passer une `ref` à votre fonction composant, vous pouvez utiliser[`forwardRef`](https://reactjs.org/docs/forwarding-refs.html) (peut-être combiné à un [`useImperativeHandle`](/docs/hooks-reference.html#useimperativehandle)), ou vous pouvez convertir votre composant pour être à base de classe.
+Si vous voulez permettre à vos utilisateurs de passer une `ref` à votre fonction composant, vous pouvez utiliser[`forwardRef`](/docs/forwarding-refs.html) (peut-être combiné à un [`useImperativeHandle`](/docs/hooks-reference.html#useimperativehandle)), ou vous pouvez convertir votre composant pour être à base de classe.
 
 Vous pouvez néanmoins **utiliser l'attribut `ref` dans une fonction composant**, tant que vous vous référez à un élément DOM ou un composant à base de classe :
 
 ```javascript{2,3,6,13}
 function CustomTextInput(props) {
   // textInput doit être déclaré ici pour que la ref puisse s’y référer
-  let textInput = React.createRef();
+  const textInput = useRef(null);
 
   function handleClick() {
     textInput.current.focus();

@@ -170,7 +170,7 @@ JSX conserve toute la puissance de JavaScript.  Vous pouvez mettre *n’importe 
 
 Le composant `ShoppingList` ci-dessus n’exploite que des composants prédéfinis du DOM tels que `<div />` et `<li />`.  Mais vous pouvez également composer et afficher des composants React personnalisés.  Par exemple, nous pouvons désormais faire référence à la liste de courses complète en écrivant simplement `<ShoppingList />`.  Chaque composant React est encapsulé (isolé) et peut fonctionner indépendamment du reste ; c’est ce qui vous permet de construire des UI complexes à partir de composants simples.
 
-## Examiner le code de départ {#inspecting-the-starter-code}
+### Examiner le code de départ {#inspecting-the-starter-code}
 
 Si vous comptez suivre le tutoriel **dans votre navigateur**, ouvrez ce code dans un nouvel onglet : **[code de démarrage](https://codepen.io/gaearon/pen/oWWQNa?editors=0010)**.  Si vous avez choisi de travailler **localement**, ouvrez plutôt `src/index.js` dans votre dossier projet (vous avez déjà manipulé ce fichier pendant la [mise en place](#setup-option-2-local-development-environment)).
 
@@ -186,7 +186,7 @@ Le composant `Square` affiche un unique `<button>` et le `Board` affiche 9 cases
 
 ### Passer des données via les props {#passing-data-through-props}
 
-Histoire de tester la température de l’eau, essayons de passer des données de notre composant `Board` à notre composant `Square`.
+Histoire de prendre la température, essayons de passer des données de notre composant `Board` à notre composant `Square`.
 
 Vous pouvez tout à fait copier-coller le code au fil du tutoriel, mais nous vous conseillons de le taper vous-même.  Cela vous aidera à développer une mémoire musculaire et une meilleure compréhension.
 

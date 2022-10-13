@@ -2,6 +2,8 @@
 id: react-without-jsx
 title: React sans JSX
 permalink: docs/react-without-jsx.html
+prev: react-without-es6.html
+next: reconciliation.html
 ---
 
 Vous n'êtes pas obligé·e d'employer JSX pour utiliser React. React sans JSX vous dispense de configurer votre environnement de travail pour gérer la compilation de votre code.
@@ -40,7 +42,7 @@ ReactDOM.render(
 
 Si vous voulez voir plus d'exemples de conversion de code JSX en JavaScript brut, vous pouvez essayer [le compilateur Babel en ligne](babel://jsx-simple-example).
 
-Le composant peut être soit une chaîne de caractères, soit une sous-classe de `React.Component`, soit une fonction simple pour les composants sans état.
+Le composant peut être soit une chaîne de caractères, soit une sous-classe de `React.Component`, soit une fonction simple.
 
 Si vous n'avez pas envie de taper `React.createElement` à chaque fois, vous pouvez à la place créer un raccourci :
 

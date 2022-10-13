@@ -32,7 +32,7 @@ Lorsque le mode strict est actif, React constitue une liste de tous les composan
 
 ![Exemple de message d'avertissement sur les méthodes dépréciées](../images/blog/strict-mode-unsafe-lifecycles-warning.png)
 
-En résolvant les problèmes identifiés par le mode strict _aujourd’hui_, vous pourrez plus facilement tirer parti du rendu asynchrone qui arrivera dans les futures versions de React.
+En résolvant les problèmes identifiés par le mode strict _aujourd’hui_, vous pourrez plus facilement tirer parti du rendu concurrent qui arrivera dans les futures versions de React.
 
 ### Signaler l'utilisation dépréciée de l'API ref à base de chaîne de caractères {#warning-about-legacy-string-ref-api-usage}
 
@@ -83,7 +83,7 @@ Conceptuellement, React fonctionne en deux étapes :
 * La phase de **rendu** détermine les modifications qui doivent être retranscrites, par exemple dans le DOM. Lors de cette phase, React appelle `render` puis compare le résultat au rendu précédent.
 * La phase de **commit** est celle de l'application des modifications. (Dans le cas de React DOM, c'est durant cette phase que React insère, modifie, et supprime des nœuds du DOM.) C’est également durant cette phase que React appelle des méthodes de cycle de vie comme `componentDidMount` et `componentDidUpdate`.
 
-La phase de commit est le plus souvent très rapide, mais le rendu peut être lent. C'est pourquoi le mode asynchrone à venir (qui n'est pas encore activé par défaut) découpe le travail de rendu en morceaux, suspendant et reprenant le travail pour éviter de bloquer le navigateur. Ça signifie que React peut invoquer les méthodes de cycle de vie de la phase de rendu plus d'une fois avant le commit, ou les invoquer sans phase de commit du tout (à cause d'une erreur ou d'une interruption de plus haute priorité).
+La phase de commit est le plus souvent très rapide, mais le rendu peut être lent. C'est pourquoi le mode concurrent à venir (qui n'est pas encore activé par défaut) découpe le travail de rendu en morceaux, suspendant et reprenant le travail pour éviter de bloquer le navigateur. Ça signifie que React peut invoquer les méthodes de cycle de vie de la phase de rendu plus d'une fois avant le commit, ou les invoquer sans phase de commit du tout (à cause d'une erreur ou d'une interruption de plus haute priorité).
 
 Pour les composants à base de classes, les méthodes de cycle de vie de la phase de rendu sont les suivantes :
 
@@ -98,12 +98,13 @@ Pour les composants à base de classes, les méthodes de cycle de vie de la phas
 
 Vu que les méthodes ci-dessus peuvent être appelées plus d'une fois, il est impératif qu'elles ne contiennent pas d'effets de bord. Ignorer cette règle peut entraîner divers problèmes, dont des fuites de mémoire et un état applicatif invalide. Malheureusement, il peut être difficile de détecter ces problèmes car ils sont souvent [non-déterministes](https://fr.wikipedia.org/wiki/Algorithme_d%C3%A9terministe).
 
-Le mode strict ne détecte pas automatiquement ces effets de bord, mais il peut vous aider à les repérer en les rendant un peu plus déterministes. Il y parvient en invoquant volontairement deux fois les méthodes suivantes :
+Le mode strict ne détecte pas automatiquement ces effets de bord, mais il peut vous aider à les repérer en les rendant un peu plus déterministes. Il y parvient en invoquant volontairement deux fois les fonctions suivantes :
 
-* Le `constructor` des composants à base de classe
-* La méthode `render`
-* Les fonctions de modification passées à `setState` (son premier argument)
-* La méthode de cycle de vie `static getDerivedStateFromProps`
+* Les méthodes `constructor`, `render` et `shouldComponentUpdate` des composants à base de classe
+* La méthode statique `getDerivedStateFromProps` des composants à base de classe
+* Le corps des fonctions composants
+* Les fonctions de mise à jour d’état (le premier argument passé à `setState`)
+* Les fonctions passées à `useState`, `useMemo` ou `useReducer`
 
 > Remarque
 >

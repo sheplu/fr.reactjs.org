@@ -2,6 +2,8 @@
 id: higher-order-components
 title: Composants d’ordre supérieur
 permalink: docs/higher-order-components.html
+prev: web-components.html
+next: render-props.html
 ---
 
 Un composant d'ordre supérieur *(Higher-Order Component ou HOC, NdT)* est une technique avancée de React qui permet de réutiliser la logique de composants. Les HOC ne font pas partie de l'API de React à proprement parler, mais découlent de sa nature compositionnelle.
@@ -177,9 +179,9 @@ Résistez à la tentation de modifier le prototype d'un composant (ou de le modi
 
 ```js
 function logProps(InputComponent) {
-  InputComponent.prototype.componentWillReceiveProps = function(nextProps) {
+  InputComponent.prototype.componentDidUpdate = function(prevProps) {
     console.log('Props actuelles : ', this.props);
-    console.log('Prochaines props : ', nextProps);
+    console.log('Props précédentes : ', prevProps);
   };
   // Le fait que le composant initial soit renvoyé est un signe qu’il a été modifié.
   return InputComponent;
@@ -189,7 +191,7 @@ function logProps(InputComponent) {
 const EnhancedComponent = logProps(InputComponent);
 ```
 
-Ce genre d'approche pose quelques problèmes. Pour commencer, le composant initial ne peut pas être réutilisé indépendamment du composant amélioré. Plus important encore, si vous appliquez un autre HOC sur `EnhancedComponent` qui modifie *aussi* `componentWillReceiveProps`, les fonctionnalités du premier HOC seront perdues ! Enfin, ce HOC ne fonctionnera pas avec des fonctions composants, qui n'ont pas de méthodes de cycle de vie.
+Ce genre d'approche pose quelques problèmes. Pour commencer, le composant initial ne peut pas être réutilisé indépendamment du composant amélioré. Plus important encore, si vous appliquez un autre HOC sur `EnhancedComponent` qui modifie *aussi* `componentDidUpdate`, les fonctionnalités du premier HOC seront perdues ! Enfin, ce HOC ne fonctionnera pas avec des fonctions composants, qui n'ont pas de méthodes de cycle de vie.
 
 Les HOC qui modifient le composant enrobé sont une abstraction foireuse : leurs utilisateurs doivent savoir comment ils sont implémentés afin d’éviter des conflits avec d'autres HOC.
 
@@ -198,9 +200,9 @@ Plutôt que la mutation, les HOC devraient utiliser la composition, en enrobant 
 ```js
 function logProps(WrappedComponent) {
   return class extends React.Component {
-    componentWillReceiveProps(nextProps) {
+    componentDidUpdate(prevProps) {
       console.log('Props actuelles : ', this.props);
-      console.log('Prochaines props : ', nextProps);
+      console.log('Props précédentes : ', prevProps);
     }
     render() {
       // Enrobe le composant initial dans un conteneur, sans le modifier. Mieux !

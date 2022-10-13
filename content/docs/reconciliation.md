@@ -2,6 +2,8 @@
 id: reconciliation
 title: Réconciliation
 permalink: docs/reconciliation.html
+prev: react-without-jsx.html
+next: context.html
 ---
 
 React fournit une API déclarative afin que vous n'ayez pas à vous soucier de savoir ce qui change exactement lors de chaque mise à jour. Ça facilite grandement l'écriture d'applications, mais la manière dont React s’y prend n'est pas forcément évidente. Cet article explique les choix que nous avons faits dans l'algorithme de comparaison de façon à rendre prévisibles les mises à jour des composants tout en restant suffisamment rapide pour des applications à hautes performances.
@@ -27,7 +29,7 @@ En comparant deux arbres, React va commencer par comparer les éléments racines
 
 Chaque fois que les éléments racines ont des types différents, React va détruire l'ancien arbre et reconstruire le nouvel arbre à partir de zéro. Passer de `<a>` à `<img>`, ou de `<Article>` à `<Comment>`, ou de `<Button>` à `<div>` : tous aboutiront à une reconstruction complète.
 
-Lors de la destruction d'un arbre, les anciens nœuds DOM sont détruits. Les instances des composants reçoivent `componentWillUnmount()`. Lors de la construction d'un nouvel arbre, les nouveaux nœuds sont insérés dans le DOM. Les instances de composants reçoivent `componentWillMount()` puis `componentDidMount()`. Tous les états associés à l'ancien arbre sont perdus.
+Lors de la destruction d'un arbre, les anciens nœuds DOM sont détruits. Les instances des composants reçoivent `componentWillUnmount()`. Lors de la construction d'un nouvel arbre, les nouveaux nœuds sont insérés dans le DOM. Les instances de composants reçoivent `UNSAFE_componentWillMount()` puis `componentDidMount()`. Tous les états associés à l'ancien arbre sont perdus.
 
 Tous les composants au-dessous de la racine seront également démontés et leur état détruit. Par exemple, en comparant :
 
@@ -42,6 +44,12 @@ Tous les composants au-dessous de la racine seront également démontés et leur
 ```
 
 Ça détruira l'ancien `Counter` puis en remontera un nouveau.
+
+>Remarque
+>
+> Les méthodes suivantes sont considérées dépréciées et vous devriez [les éviter](/blog/2018/03/27/update-on-async-rendering.html) dans vos nouveaux codes :
+>
+>- `UNSAFE_componentWillMount()`
 
 ### Éléments DOM de même type {#dom-elements-of-the-same-type}
 
@@ -69,9 +77,16 @@ Après avoir manipulé le nœud DOM, React applique le même traitement sur les 
 
 ### Éléments composants de même type {#component-elements-of-the-same-type}
 
-Lorsqu'un composant est mis à jour, l'instance reste la même, afin que l'état soit maintenu d’un rendu à l’autre. React met à jour les props de l’instance de composant sous-jacente pour correspondre au nouvel élément, et appelle `componentWillReceiveProps()` et `componentWillUpdate()` dessus.
+Lorsqu'un composant est mis à jour, l'instance reste la même, afin que l'état soit maintenu d’un rendu à l’autre. React met à jour les props de l’instance de composant sous-jacente pour correspondre au nouvel élément, et appelle `UNSAFE_componentWillReceiveProps()`, `UNSAFE_componentWillUpdate()` et `componentDidUpdate()` dessus.
 
 Ensuite, la méthode `render()` est appelée et l'algorithme de comparaison reprend entre son résultat précédent et le nouveau.
+
+>Remarque
+>
+> Les méthodes suivantes sont considérées dépréciées et vous devriez [les éviter](/blog/2018/03/27/update-on-async-rendering.html) dans vos nouveaux codes :
+>
+>- `UNSAFE_componentWillReceiveProps()`
+>- `UNSAFE_componentWillUpdate()`
 
 ### Traitement récursif sur les enfants {#recursing-on-children}
 
@@ -142,7 +157,7 @@ En dernier recours, vous pouvez utiliser l'index de l'élément dans un tableau 
 
 Les tris peuvent également causer des problèmes avec les états des composants quand les index sont utilisés comme des clés. Les instances des composants sont mises à jour et réutilisées en fonction de leur clé. Si la clé est un index, déplacer un élément changera sa clé. En conséquence, l'état local des composants utilisés pour des saisies non-contrôlées peut s'emmêler et être mis à jour de manière inattendue.
 
-[Voici](codepen://reconciliation/index-used-as-key) un exemple sur CodePen des problèmes qui peuvent être causés en utilisant des index comme clés. [Voilà](codepen://reconciliation/no-index-used-as-key) une version mise à jour du même exemple montrant comment, en évitant d'utiliser les index comme clés, on résoudra ces problèmes de réordonnancement, de tri et d'insertion.
+Voici [un exemple sur CodePen des problèmes qui peuvent être causés en utilisant des index comme clés](codepen://reconciliation/index-used-as-key). Voilà [une version mise à jour du même exemple montrant comment, en évitant d'utiliser les index comme clés, on résoudra ces problèmes de réordonnancement, de tri et d'insertion](codepen://reconciliation/no-index-used-as-key).
 
 ## Compromis {#tradeoffs}
 
